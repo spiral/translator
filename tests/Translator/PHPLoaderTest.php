@@ -23,4 +23,24 @@ class PHPLoaderTest extends TestCase
         $this->assertInstanceOf(MessageCatalogue::class, $catalogue);
         $this->assertSame('translation', $catalogue->get('message'));
     }
+
+    /**
+     * @expectedException \Symfony\Component\Translation\Exception\NotFoundResourceException
+     */
+    public function testExceptions()
+    {
+        $loader = new PhpFileLoader();
+
+        $loader->load(__DIR__ . '/fixtures/invalid.php', 'ru');
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Translation\Exception\InvalidResourceException
+     */
+    public function testStreamExceptions()
+    {
+        $loader = new PhpFileLoader();
+
+        $loader->load("ftp://file", 'ru');
+    }
 }
