@@ -56,6 +56,7 @@ class Indexer
      *
      * @param string $domain
      * @param string $string
+     * @param bool   $resolveDomain
      */
     public function registerMessage(string $domain, string $string, bool $resolveDomain = true)
     {
@@ -83,7 +84,7 @@ class Indexer
         foreach ($locator->getClasses(TranslatorTrait::class) as $class) {
             $strings = $this->fetchMessages(
                 $class,
-                $class->getConstant('INHERIT_TRANSLATIONS')
+                strpos($class->getDocComment(), '@inherit-messages') !== false
             );
 
             foreach ($strings as $string) {
@@ -141,7 +142,7 @@ class Indexer
      *
      * @return array
      */
-    private function fetchMessages(\ReflectionClass $reflection, $recursively = false)
+    private function fetchMessages(\ReflectionClass $reflection, bool $recursively = false)
     {
         $target = $reflection->getDefaultProperties() + $reflection->getConstants();
 
