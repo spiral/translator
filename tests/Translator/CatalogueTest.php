@@ -110,6 +110,16 @@ class CatalogueTest extends TestCase
         $this->assertSame('Original Translation', $catalogue->get('domain', 'message'));
     }
 
+    public function testMergeSymfonyAndFollowOnEmpty()
+    {
+        $catalogue = new Catalogue('ru', []);
+
+        $messageCatalogue = new MessageCatalogue('ru', ['domain' => ['message' => 'Translation']]);
+        $catalogue->mergeFrom($messageCatalogue, true);
+
+        $this->assertSame('Translation', $catalogue->get('domain', 'message'));
+    }
+
     public function testMergeSymfonyAndReplace()
     {
         $catalogue = new Catalogue('ru', []);
@@ -121,5 +131,22 @@ class CatalogueTest extends TestCase
         $catalogue->mergeFrom($messageCatalogue, false);
 
         $this->assertSame('Translation', $catalogue->get('domain', 'message'));
+    }
+
+    public function testToCatalogue()
+    {
+        $catalogue = new Catalogue('ru', [
+            'messages' => [
+                'message' => 'Russian Translation'
+            ],
+            'views'    => [
+                'view' => 'Russian View'
+            ]
+        ]);
+
+        $sc = $catalogue->toMessageCatalogue();
+
+        $this->assertSame("ru", $sc->getLocale());
+        $this->assertSame(['messages', 'views'], $sc->getDomains());
     }
 }
