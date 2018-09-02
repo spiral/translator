@@ -12,12 +12,12 @@ use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Spiral\Core\MemoryInterface;
 use Spiral\Translator\CatalogueInterface;
+use Spiral\Translator\Catalogues\Manager;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Loaders\PhpFileLoader;
-use Spiral\Translator\Catalogues\Manager;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
-class LocalesTest extends TestCase
+class ManagerTest extends TestCase
 {
     public function testLocalesFromLoader()
     {
@@ -96,7 +96,6 @@ class LocalesTest extends TestCase
             ]
         )->andReturn(null);
 
-
         $memory->shouldReceive('saveData')->with(
             'locales/ru',
             [
@@ -151,5 +150,29 @@ class LocalesTest extends TestCase
 
         $this->assertTrue($catalogue->has('messages', 'message'));
         $this->assertSame('new message', $catalogue->get('messages', 'message'));
+    }
+
+    /**
+     * @expectedException \Spiral\Translator\Exceptions\LocaleException
+     */
+    public function testException()
+    {
+        $memory = m::mock(MemoryInterface::class);
+        $memory->shouldReceive('loadData')->with(
+            Manager::MEMORY
+        )->andReturn(['en']);
+
+        $memory->shouldReceive('saveData')->with()->andReturn(null);
+
+        $manager = new Manager(new TranslatorConfig([
+                'directory' => __DIR__ . '/fixtures/locales/',
+                'loaders'   => [
+                    'php' => PhpFileLoader::class,
+                    'po'  => PoFileLoader::class,
+                ]
+            ]
+        ), $memory);
+
+        $manager->load('ru');
     }
 }
