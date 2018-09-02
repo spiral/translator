@@ -12,14 +12,14 @@ use PHPUnit\Framework\TestCase;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Loaders\PhpFileLoader;
-use Spiral\Translator\Catalogues\CatalogueLoader;
+use Spiral\Translator\Catalogues\Loader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class LoaderTest extends TestCase
 {
     public function testHasLocale()
     {
-        $loader = new CatalogueLoader(new TranslatorConfig([
+        $loader = new Loader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/'
         ]));
 
@@ -29,7 +29,7 @@ class LoaderTest extends TestCase
 
     public function testGetLocales()
     {
-        $loader = new CatalogueLoader(new TranslatorConfig([
+        $loader = new Loader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/'
         ]));
 
@@ -43,7 +43,7 @@ class LoaderTest extends TestCase
 
     public function testLoadCatalogue()
     {
-        $loader = new CatalogueLoader(new TranslatorConfig([
+        $loader = new Loader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/',
             'loaders'   => [
                 'php' => PhpFileLoader::class,
@@ -83,7 +83,7 @@ class LoaderTest extends TestCase
 
     public function testLoadCatalogueNoLoader()
     {
-        $loader = new CatalogueLoader(new TranslatorConfig([
+        $loader = new Loader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/',
             'loaders'   => [
                 'php' => PhpFileLoader::class,

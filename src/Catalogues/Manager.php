@@ -18,14 +18,14 @@ use Spiral\Translator\LocalesInterface;
 /**
  * Manages catalogues and their cached data.
  */
-class CatalogueManager implements LocalesInterface
+class Manager implements LocalesInterface
 {
     const MEMORY = "locales";
 
     /** @var TranslatorConfig */
     private $config = null;
 
-    /** @var \Spiral\Translator\Catalogues\CatalogueLoader */
+    /** @var \Spiral\Translator\Catalogues\Loader */
     private $loader;
 
     /** @var MemoryInterface */
@@ -44,7 +44,7 @@ class CatalogueManager implements LocalesInterface
     public function __construct(TranslatorConfig $config, MemoryInterface $memory)
     {
         $this->config = $config;
-        $this->loader = new CatalogueLoader($config);
+        $this->loader = new Loader($config);
         $this->memory = $memory;
     }
 

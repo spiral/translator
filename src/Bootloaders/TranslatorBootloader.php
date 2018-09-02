@@ -9,7 +9,7 @@
 namespace Spiral\Translator\Bootloaders;
 
 use Spiral\Core\Bootloaders\Bootloader;
-use Spiral\Translator\Catalogues\CatalogueManager;
+use Spiral\Translator\Catalogues\Manager;
 use Spiral\Translator\LocalesInterface;
 use Spiral\Translator\Translator;
 use Spiral\Translator\TranslatorInterface;
@@ -18,6 +18,6 @@ class TranslatorBootloader extends Bootloader
 {
     const SINGLETONS = [
         TranslatorInterface::class => Translator::class,
-        LocalesInterface::class    => CatalogueManager::class
+        LocalesInterface::class    => Manager::class
     ];
 }

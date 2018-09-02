@@ -14,7 +14,7 @@ use Spiral\Core\MemoryInterface;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Loaders\PhpFileLoader;
-use Spiral\Translator\Catalogues\CatalogueManager;
+use Spiral\Translator\Catalogues\Manager;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class LocalesTest extends TestCase
@@ -25,7 +25,7 @@ class LocalesTest extends TestCase
         $memory->shouldReceive('loadData')->andReturn(null);
         $memory->shouldReceive('saveData')->andReturn(null);
 
-        $manager = new CatalogueManager(new TranslatorConfig([
+        $manager = new Manager(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -44,7 +44,7 @@ class LocalesTest extends TestCase
         $memory->shouldReceive('loadData')->andReturn(['en', 'ru']);
         $memory->shouldNotReceive('saveData')->andReturn(null);
 
-        $manager = new CatalogueManager(new TranslatorConfig([
+        $manager = new Manager(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -61,10 +61,10 @@ class LocalesTest extends TestCase
     {
         $memory = m::mock(MemoryInterface::class);
         $memory->shouldReceive('loadData')->with(
-            CatalogueManager::MEMORY
+            Manager::MEMORY
         )->andReturn(['en', 'ru']);
 
-        $manager = new CatalogueManager(new TranslatorConfig([
+        $manager = new Manager(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -74,7 +74,7 @@ class LocalesTest extends TestCase
         ), $memory);
 
         $memory->shouldReceive('loadData')->with(
-            CatalogueManager::MEMORY . '/ru'
+            Manager::MEMORY . '/ru'
         )->andReturn([]);
 
         $catalogue = $manager->get("ru");
@@ -118,11 +118,11 @@ class LocalesTest extends TestCase
     {
         $memory = m::mock(MemoryInterface::class);
         $memory->shouldReceive('loadData')->with(
-            CatalogueManager::MEMORY
+            Manager::MEMORY
         )->andReturn(['en', 'ru']);
 
         $memory->shouldReceive('loadData')->with(
-            CatalogueManager::MEMORY . '/ru'
+            Manager::MEMORY . '/ru'
         )->andReturn([
             'messages' => [
                 'message' => 'new message'
@@ -133,7 +133,7 @@ class LocalesTest extends TestCase
             ]
         ]);
 
-        $manager = new CatalogueManager(new TranslatorConfig([
+        $manager = new Manager(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -143,7 +143,7 @@ class LocalesTest extends TestCase
         ), $memory);
 
         $memory->shouldReceive('loadData')->with(
-            CatalogueManager::MEMORY . '/ru'
+            Manager::MEMORY . '/ru'
         )->andReturn([]);
 
         $catalogue = $manager->get("ru");
