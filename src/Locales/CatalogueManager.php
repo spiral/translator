@@ -18,7 +18,7 @@ use Spiral\Translator\LocalesInterface;
 /**
  * Manages catalogues and their cached data.
  */
-class LocaleManager implements LocalesInterface
+class CatalogueManager implements LocalesInterface
 {
     const MEMORY = "locales";
 
@@ -60,8 +60,8 @@ class LocaleManager implements LocalesInterface
         $this->locales = (array)$this->memory->loadData(self::MEMORY);
         if (empty($this->locales)) {
             $this->locales = $this->loader->getLocales();
+            $this->memory->saveData(self::MEMORY, $this->locales);
         }
-        $this->memory->saveData(self::MEMORY, $this->locales);
 
         return $this->locales;
     }
@@ -96,7 +96,7 @@ class LocaleManager implements LocalesInterface
     {
         $this->memory->saveData(
             sprintf("%s/%s", self::MEMORY, $locale),
-            $this->get($locale)
+            $this->get($locale)->getData()
         );
     }
 
