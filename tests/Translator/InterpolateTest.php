@@ -39,6 +39,14 @@ class InterpolateTest extends TestCase
         );
     }
 
+    public function testInterpolateBad()
+    {
+        $this->assertSame(
+            "Bye, {1}!",
+            $this->translator()->trans("Bye, {1}!", [new self])
+        );
+    }
+
     protected function translator(): Translator
     {
         $container = new Container();
@@ -57,7 +65,7 @@ class InterpolateTest extends TestCase
         $loader->addCatalogue('en', new Catalogue('en', [
             'messages' => [
                 "Welcome, {name}!" => "Welcome, {name}!",
-                "Bye, {1}!" => "Bye, {1}!"
+                "Bye, {1}!"        => "Bye, {1}!"
             ]
         ]));
 
