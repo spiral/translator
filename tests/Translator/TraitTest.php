@@ -52,9 +52,6 @@ class TraitTest extends TestCase
         $bootloader->bootload([TranslatorBootloader::class]);
     }
 
-    /**
-     * @expectedException \Spiral\Core\Exceptions\ScopeException
-     */
     public function testScopeException()
     {
         $this->assertSame("message", $this->say("message"));

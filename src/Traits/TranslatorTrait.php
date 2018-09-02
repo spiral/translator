@@ -46,9 +46,7 @@ trait TranslatorTrait
 
         $container = ContainerScope::getContainer();
         if (empty($container) || !$container->has(TranslatorInterface::class)) {
-            throw new ScopeException(
-                '`TranslatorInterface` binding is missing or container scope is not set'
-            );
+            return Translator::interpolate($string, $options);
         }
 
         /**

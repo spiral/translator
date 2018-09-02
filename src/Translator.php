@@ -109,7 +109,7 @@ class Translator implements TranslatorInterface, SingletonInterface
 
         $message = $this->get($locale, $domain, $id);
 
-        return $this->interpolate($message, $parameters);
+        return self::interpolate($message, $parameters);
     }
 
     /**
@@ -148,7 +148,7 @@ class Translator implements TranslatorInterface, SingletonInterface
             throw new PluralizationException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $this->interpolate($pluralized, $parameters);
+        return self::interpolate($pluralized, $parameters);
     }
 
     /**
@@ -195,7 +195,7 @@ class Translator implements TranslatorInterface, SingletonInterface
      *
      * @return string
      */
-    protected function interpolate(
+    public static function interpolate(
         string $string,
         array $values,
         string $prefix = '{',
