@@ -54,12 +54,14 @@ class Indexer
     /**
      * Register string in active translator.
      *
-     * @param string $bundle
+     * @param string $domain
      * @param string $string
      */
-    public function registerMessage(string $bundle, string $string)
+    public function registerMessage(string $domain, string $string, bool $resolveDomain = true)
     {
-        $domain = $this->config->resolveDomain($bundle);
+        if ($resolveDomain) {
+            $domain = $this->config->resolveDomain($domain);
+        }
 
         //Automatically registering
         $this->catalogue->set($domain, $string, $string);
@@ -127,7 +129,7 @@ class Indexer
             $string = $invocation->getArgument(0)->stringValue();
             $string = $this->prepareMessage($string);
 
-            $this->registerMessage($this->invocationDomain($invocation), $string);
+            $this->registerMessage($this->invocationDomain($invocation), $string, false);
         }
     }
 

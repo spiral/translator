@@ -45,6 +45,9 @@ class IndexerTest extends TestCase
 
         $this->assertTrue($catalogue->has('messages', 'hello'));
         $this->assertTrue($catalogue->has('messages', '{n} dog|{n} dogs'));
+
+        $this->assertTrue($catalogue->has('spiral', 'other'));
+        $this->assertTrue($catalogue->has('spiral', 'hi-from-class'));
     }
 
     public function testIndexClasses()
@@ -67,12 +70,19 @@ class IndexerTest extends TestCase
         // from stubs
         $this->assertTrue($catalogue->has('spiral', 'some-text'));
         $this->assertFalse($catalogue->has('spiral', 'no-message'));
+
+        $this->assertTrue($catalogue->has('spiral', 'new-mess'));
     }
 
     private function inner()
     {
+        $var = 'something';
+        l($var);
+
+        l('other', [], 'spiral-domain');
         l('hello');
         p('{n} dog|{n} dogs', 1);
+        p('{n} cat|{n} cats', 1, [], 'spiral-domain');
     }
 
     protected function tContainer(): Container
