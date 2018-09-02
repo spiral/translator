@@ -12,7 +12,6 @@ use Spiral\Core\MemoryInterface;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\CataloguesInterface;
-use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Exceptions\LocaleException;
 
 /**
@@ -22,16 +21,7 @@ class Manager implements CataloguesInterface
 {
     const MEMORY = "locales";
 
-    /**
-     * @invisible
-     * @var TranslatorConfig
-     */
-    private $config = null;
-
-    /**
-     * @invisible
-     * @var \Spiral\Translator\Catalogues\Loader
-     */
+    /** @var LoaderInterface */
     private $loader;
 
     /**
@@ -47,13 +37,12 @@ class Manager implements CataloguesInterface
     private $catalogues = [];
 
     /**
-     * @param TranslatorConfig $config
-     * @param MemoryInterface  $memory
+     * @param LoaderInterface $loader
+     * @param MemoryInterface $memory
      */
-    public function __construct(TranslatorConfig $config, MemoryInterface $memory)
+    public function __construct(LoaderInterface $loader, MemoryInterface $memory)
     {
-        $this->config = $config;
-        $this->loader = new Loader($config);
+        $this->loader = $loader;
         $this->memory = $memory;
     }
 

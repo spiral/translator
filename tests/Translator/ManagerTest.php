@@ -12,6 +12,7 @@ use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Spiral\Core\MemoryInterface;
 use Spiral\Translator\CatalogueInterface;
+use Spiral\Translator\Catalogues\Loader;
 use Spiral\Translator\Catalogues\Manager;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Exceptions\LocaleException;
@@ -26,14 +27,14 @@ class ManagerTest extends TestCase
         $memory->shouldReceive('loadData')->andReturn(null);
         $memory->shouldReceive('saveData')->andReturn(null);
 
-        $manager = new Manager(new TranslatorConfig([
+        $manager = new Manager(new Loader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
             ]
-        ), $memory);
+        )), $memory);
 
         $this->assertTrue($manager->has('ru'));
         $this->assertTrue($manager->has('en'));
@@ -45,14 +46,14 @@ class ManagerTest extends TestCase
         $memory->shouldReceive('loadData')->andReturn(['en', 'ru']);
         $memory->shouldNotReceive('saveData')->andReturn(null);
 
-        $manager = new Manager(new TranslatorConfig([
+        $manager = new Manager(new Loader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
             ]
-        ), $memory);
+        )), $memory);
 
         $this->assertTrue($manager->has('ru'));
         $this->assertTrue($manager->has('en'));
@@ -65,14 +66,14 @@ class ManagerTest extends TestCase
             Manager::MEMORY
         )->andReturn(['en', 'ru']);
 
-        $manager = new Manager(new TranslatorConfig([
+        $manager = new Manager(new Loader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
             ]
-        ), $memory);
+        )), $memory);
 
         $memory->shouldReceive('loadData')->with(
             Manager::MEMORY . '/ru'
@@ -133,14 +134,14 @@ class ManagerTest extends TestCase
             ]
         ]);
 
-        $manager = new Manager(new TranslatorConfig([
+        $manager = new Manager(new Loader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
             ]
-        ), $memory);
+        )), $memory);
 
         $memory->shouldReceive('loadData')->with(
             Manager::MEMORY . '/ru'
@@ -171,14 +172,14 @@ class ManagerTest extends TestCase
 
         $memory->shouldReceive('saveData')->with()->andReturn(null);
 
-        $manager = new Manager(new TranslatorConfig([
+        $manager = new Manager(new Loader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
             ]
-        ), $memory);
+        )), $memory);
 
         try {
             $manager->load('ru');

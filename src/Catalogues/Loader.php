@@ -10,11 +10,12 @@ namespace Spiral\Translator\Catalogues;
 
 use Spiral\Debug\Traits\LoggerTrait;
 use Spiral\Translator\Catalogue;
+use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class Loader
+class Loader implements LoaderInterface
 {
     use LoggerTrait;
 
@@ -30,11 +31,7 @@ class Loader
     }
 
     /**
-     * Check if locale data exists.
-     *
-     * @param string $locale
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function hasLocale(string $locale): bool
     {
@@ -44,9 +41,7 @@ class Loader
     }
 
     /**
-     * List of all known locales.
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getLocales(): array
     {
@@ -66,11 +61,9 @@ class Loader
     }
 
     /**
-     * @param string $locale
-     *
-     * @return Catalogue
+     * @inheritdoc
      */
-    public function loadCatalogue(string $locale): Catalogue
+    public function loadCatalogue(string $locale): CatalogueInterface
     {
         $locale = preg_replace("/[^a-zA-Z_]/", '', mb_strtolower($locale));
         $catalogue = new Catalogue($locale);
