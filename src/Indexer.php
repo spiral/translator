@@ -138,11 +138,11 @@ class Indexer
      * Fetch default string values from class and merge it with parent strings if requested.
      *
      * @param \ReflectionClass $reflection
-     * @param bool             $recursively
+     * @param bool             $inherit
      *
      * @return array
      */
-    private function fetchMessages(\ReflectionClass $reflection, bool $recursively = false)
+    private function fetchMessages(\ReflectionClass $reflection, bool $inherit = false)
     {
         $target = $reflection->getDefaultProperties() + $reflection->getConstants();
 
@@ -159,7 +159,7 @@ class Indexer
             }
         });
 
-        if ($recursively && $reflection->getParentClass()) {
+        if ($inherit && $reflection->getParentClass()) {
             //Joining strings data with parent class values (inheritance ON) - resolved into same
             //domain on export
             $strings = array_merge(
