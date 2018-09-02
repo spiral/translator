@@ -14,6 +14,7 @@ use Spiral\Core\MemoryInterface;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Catalogues\Manager;
 use Spiral\Translator\Configs\TranslatorConfig;
+use Spiral\Translator\Exceptions\LocaleException;
 use Spiral\Translator\Loaders\PhpFileLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
@@ -173,6 +174,11 @@ class ManagerTest extends TestCase
             ]
         ), $memory);
 
-        $manager->load('ru');
+        try {
+            $manager->load('ru');
+        } catch (LocaleException $e) {
+            $this->assertSame('ru', $e->getLocale());
+            throw new $e;
+        }
     }
 }
