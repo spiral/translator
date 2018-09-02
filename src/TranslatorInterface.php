@@ -29,4 +29,11 @@ interface TranslatorInterface extends \Symfony\Component\Translation\TranslatorI
      * @return string
      */
     public function resolveDomain(string $bundle): string;
+
+    /**
+     * Get associated catalogue manager.
+     *
+     * @return CataloguesInterface
+     */
+    public function getCatalogues(): CataloguesInterface;
 }

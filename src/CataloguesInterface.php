@@ -11,14 +11,14 @@ namespace Spiral\Translator;
 /**
  * Manages list of locales and associated catalogues.
  */
-interface LocalesInterface
+interface CataloguesInterface
 {
     /**
      * Get list of all existed locales.
      *
      * @return array
      */
-    public function getNames(): array;
+    public function getLocales(): array;
 
     /**
      * Load catalogue.

@@ -23,28 +23,31 @@ class Translator implements TranslatorInterface, SingletonInterface
     /** @var TranslatorConfig */
     private $config;
 
-    /** @var MessageSelector */
-    private $selector;
-
-    /** @var LocalesInterface */
-    private $locales;
-
     /** @var string */
     private $locale = '';
 
     /**
-     * @param TranslatorConfig $config
-     * @param MessageSelector  $selector
-     * @param LocalesInterface $locales
+     * @invisible
+     * @var MessageSelector
+     */
+    private $selector;
+
+    /** @var CataloguesInterface */
+    private $catalogues;
+
+    /**
+     * @param TranslatorConfig    $config
+     * @param MessageSelector     $selector
+     * @param CataloguesInterface $locales
      */
     public function __construct(
         TranslatorConfig $config,
         MessageSelector $selector,
-        LocalesInterface $locales
+        CataloguesInterface $locales
     ) {
         $this->config = $config;
         $this->selector = $selector;
-        $this->locales = $locales;
+        $this->catalogues = $locales;
 
         $this->setLocale($this->config->defaultLocale());
     }
@@ -66,12 +69,12 @@ class Translator implements TranslatorInterface, SingletonInterface
      */
     public function setLocale($locale)
     {
-        if (!$this->locales->has($locale)) {
+        if (!$this->catalogues->has($locale)) {
             throw new LocaleException($locale);
         }
 
         $this->locale = $locale;
-        $this->locales->load($locale);
+        $this->catalogues->load($locale);
 
         return $this;
     }
@@ -87,9 +90,9 @@ class Translator implements TranslatorInterface, SingletonInterface
     /**
      * @inheritdoc
      */
-    public function getLocales(): LocalesInterface
+    public function getCatalogues(): CataloguesInterface
     {
-        return $this->locales;
+        return $this->catalogues;
     }
 
     /**
@@ -159,20 +162,20 @@ class Translator implements TranslatorInterface, SingletonInterface
      */
     protected function get(string &$locale, string $domain, string $string): string
     {
-        if ($this->locales->get($locale)->has($domain, $string)) {
-            return $this->locales->get($locale)->get($domain, $string);
+        if ($this->catalogues->get($locale)->has($domain, $string)) {
+            return $this->catalogues->get($locale)->get($domain, $string);
         }
 
         $locale = $this->config->fallbackLocale();
 
-        if ($this->locales->get($locale)->has($domain, $string)) {
-            return $this->locales->get($locale)->get($domain, $string);
+        if ($this->catalogues->get($locale)->has($domain, $string)) {
+            return $this->catalogues->get($locale)->get($domain, $string);
         }
 
         // we can automatically register message
         if ($this->config->registerMessages()) {
-            $this->locales->get($locale)->set($domain, $string, $string);
-            $this->locales->save($locale);
+            $this->catalogues->get($locale)->set($domain, $string, $string);
+            $this->catalogues->save($locale);
         }
 
         //Unable to find translation

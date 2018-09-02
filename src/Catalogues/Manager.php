@@ -11,24 +11,33 @@ namespace Spiral\Translator\Catalogues;
 use Spiral\Core\MemoryInterface;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\CatalogueInterface;
+use Spiral\Translator\CataloguesInterface;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Exceptions\LocaleException;
-use Spiral\Translator\LocalesInterface;
 
 /**
  * Manages catalogues and their cached data.
  */
-class Manager implements LocalesInterface
+class Manager implements CataloguesInterface
 {
     const MEMORY = "locales";
 
-    /** @var TranslatorConfig */
+    /**
+     * @invisible
+     * @var TranslatorConfig
+     */
     private $config = null;
 
-    /** @var \Spiral\Translator\Catalogues\Loader */
+    /**
+     * @invisible
+     * @var \Spiral\Translator\Catalogues\Loader
+     */
     private $loader;
 
-    /** @var MemoryInterface */
+    /**
+     * @invisible
+     * @var MemoryInterface
+     */
     private $memory = null;
 
     /** @var array */
@@ -51,7 +60,7 @@ class Manager implements LocalesInterface
     /**
      * @inheritdoc
      */
-    public function getNames(): array
+    public function getLocales(): array
     {
         if (!empty($this->locales)) {
             return $this->locales;
@@ -105,7 +114,7 @@ class Manager implements LocalesInterface
      */
     public function has(string $locale): bool
     {
-        return isset($this->catalogues[$locale]) || in_array($locale, $this->getNames());
+        return isset($this->catalogues[$locale]) || in_array($locale, $this->getLocales());
     }
 
     /**
@@ -122,7 +131,7 @@ class Manager implements LocalesInterface
     public function reset()
     {
         $this->memory->saveData(self::MEMORY, null);
-        foreach ($this->getNames() as $locale) {
+        foreach ($this->getLocales() as $locale) {
             $this->memory->saveData(sprintf("%s/%s", self::MEMORY, $locale), null);
         }
 

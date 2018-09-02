@@ -66,7 +66,7 @@ class TranslatorConfig extends InjectableConfig
      */
     public function fallbackLocale(): string
     {
-        return $this->config['fallbackLocale'];
+        return $this->config['fallbackLocale'] ?? $this->config['locale'];
     }
 
     /**
