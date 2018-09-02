@@ -35,31 +35,27 @@ class Catalogue implements CatalogueInterface
     }
 
     /**
-     * Check if domain message exists.
-     *
-     * @param string $domain
-     * @param string $string
-     *
-     * @return bool
+     * @inheritdoc
      */
-    public function has(string $domain, string $string): bool
+    public function getLocale(): string
     {
-        if (!empty($this->data[$domain]) && array_key_exists($string, $this->data[$domain])) {
-            return true;
-        }
-
-        return array_key_exists($string, $this->data[$domain]);
+        return $this->locale;
     }
 
     /**
-     * Get domain message.
-     *
-     * @param string $domain
-     * @param string $string
-     *
-     * @return string
-     *
-     * @throws CatalogueException
+     * @inheritdoc
+     */
+    public function has(string $domain, string $id): bool
+    {
+        if (!isset($this->data[$domain])) {
+            return false;
+        }
+
+        return array_key_exists($id, $this->data[$domain]);
+    }
+
+    /**
+     * @inheritdoc
      */
     public function get(string $domain, string $string): string
     {
@@ -71,11 +67,7 @@ class Catalogue implements CatalogueInterface
     }
 
     /**
-     * Adding string association to be stored into memory.
-     *
-     * @param string $domain
-     * @param string $string
-     * @param string $value
+     * @inheritdoc
      */
     public function set(string $domain, string $string, string $value)
     {
@@ -83,9 +75,7 @@ class Catalogue implements CatalogueInterface
     }
 
     /**
-     * List of loaded domains
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getData(): array
     {

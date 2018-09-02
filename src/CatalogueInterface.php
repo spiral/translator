@@ -11,7 +11,12 @@ namespace Spiral\Translator;
 interface CatalogueInterface
 {
     /**
-     * Check if message exists in catalogue.
+     * @return string
+     */
+    public function getLocale(): string;
+
+    /**
+     * Check if domain message exists.
      *
      * @param string $domain
      * @param string $id
