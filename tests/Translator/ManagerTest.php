@@ -151,6 +151,12 @@ class ManagerTest extends TestCase
 
         $this->assertTrue($catalogue->has('messages', 'message'));
         $this->assertSame('new message', $catalogue->get('messages', 'message'));
+
+        $memory->shouldReceive('saveData')->with(Manager::MEMORY, null);
+        $memory->shouldReceive('saveData')->with(Manager::MEMORY . '/ru', null);
+        $memory->shouldReceive('saveData')->with(Manager::MEMORY . '/en', null);
+
+        $manager->reset();
     }
 
     /**
@@ -178,7 +184,7 @@ class ManagerTest extends TestCase
             $manager->load('ru');
         } catch (LocaleException $e) {
             $this->assertSame('ru', $e->getLocale());
-            throw new $e;
+            throw $e;
         }
     }
 }

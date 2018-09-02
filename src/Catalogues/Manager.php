@@ -115,4 +115,18 @@ class Manager implements LocalesInterface
     {
         return $this->load($locale);
     }
+
+    /**
+     * Reset all cached data and loaded locates.
+     */
+    public function reset()
+    {
+        $this->memory->saveData(self::MEMORY, null);
+        foreach ($this->getNames() as $locale) {
+            $this->memory->saveData(sprintf("%s/%s", self::MEMORY, $locale), null);
+        }
+
+        $this->locales = [];
+        $this->catalogues = [];
+    }
 }
