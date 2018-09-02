@@ -170,7 +170,7 @@ class Translator implements TranslatorInterface, SingletonInterface
         }
 
         // we can automatically register message
-        if ($this->config->autoRegister()) {
+        if ($this->config->registerMessages()) {
             $this->locales->get($locale)->set($domain, $string, $string);
             $this->locales->save($locale);
         }

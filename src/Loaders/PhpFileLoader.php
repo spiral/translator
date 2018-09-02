@@ -15,7 +15,7 @@ use Symfony\Component\Translation\Loader\ArrayLoader;
 /**
  * Loader which allows to store translation in a form of PHP code (used for caching purposes).
  */
-class PHPFileLoader extends ArrayLoader
+class PhpFileLoader extends ArrayLoader
 {
     /**
      * {@inheritdoc}

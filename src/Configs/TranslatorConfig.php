@@ -85,7 +85,7 @@ class TranslatorConfig extends InjectableConfig
     /**
      * @return bool
      */
-    public function autoRegister(): bool
+    public function registerMessages(): bool
     {
         return !empty($this->config['autoRegister']) || !empty($this->config['registerMessages']);
     }
@@ -148,7 +148,9 @@ class TranslatorConfig extends InjectableConfig
      */
     public function getLoader(string $extension): LoaderInterface
     {
-        return new ($this->config['loaders'][$extension]);
+        $class = $this->config['loaders'][$extension];
+
+        return new $class;
     }
 
     /**
@@ -168,6 +170,8 @@ class TranslatorConfig extends InjectableConfig
      */
     public function getDumper(string $dumper): DumperInterface
     {
-        return new ($this->config['dumpers'][$dumper]);
+        $class = $this->config['dumpers'][$dumper];
+
+        return new $class;
     }
 }
