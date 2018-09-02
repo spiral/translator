@@ -131,7 +131,7 @@ class Translator implements TranslatorInterface, SingletonInterface
         $domain = $domain ?? $this->config->defaultDomain();
         $locale = $locale ?? $this->locale;
 
-        if (empty($parameters['n'])) {
+        if (empty($parameters['n']) && is_numeric($number)) {
             $parameters['n'] = number_format($number);
         }
 
