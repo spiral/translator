@@ -72,6 +72,7 @@ class CatalogueLoader
      */
     public function loadCatalogue(string $locale): Catalogue
     {
+        $locale = preg_replace("/[^a-zA-Z_]/", '', mb_strtolower($locale));
         $catalogue = new Catalogue($locale);
 
         $finder = new Finder();

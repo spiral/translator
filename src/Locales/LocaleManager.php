@@ -76,7 +76,7 @@ class LocaleManager implements LocalesInterface
         }
 
         if (!$this->has($locale)) {
-            throw new LocaleException(sprintf("Undefined locale `%s`.", $locale));
+            throw new LocaleException($locale);
         }
 
         $data = (array)$this->memory->loadData(sprintf("%s/%s", self::MEMORY, $locale));

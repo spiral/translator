@@ -88,6 +88,15 @@ class ConfigTest extends TestCase
         $this->assertSame('directory/ru/', $config->localeDirectory('ru'));
     }
 
+    public function testLocaleDirectoryShort()
+    {
+        $config = new TranslatorConfig([
+            'directory' => 'directory/'
+        ]);
+
+        $this->assertSame('directory/ru/', $config->localeDirectory('ru'));
+    }
+
     public function testDomains()
     {
         $config = new TranslatorConfig([

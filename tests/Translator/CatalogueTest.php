@@ -33,7 +33,7 @@ class CatalogueTest extends TestCase
             ]
         ]);
 
-        $this->assertSame(['messages', 'views'], array_keys($catalogue->getData()));
+        $this->assertSame(['messages', 'views'], $catalogue->getDomains());
 
         $this->assertTrue($catalogue->has('messages', 'message'));
         $this->assertTrue($catalogue->has('views', 'view'));

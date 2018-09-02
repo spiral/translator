@@ -16,6 +16,13 @@ interface CatalogueInterface
     public function getLocale(): string;
 
     /**
+     * All domains registered within catalogue.
+     *
+     * @return array
+     */
+    public function getDomains(): array;
+
+    /**
      * Check if domain message exists.
      *
      * @param string $domain

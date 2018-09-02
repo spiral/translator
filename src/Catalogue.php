@@ -45,6 +45,14 @@ class Catalogue implements CatalogueInterface
     /**
      * @inheritdoc
      */
+    public function getDomains(): array
+    {
+        return array_keys($this->data);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function has(string $domain, string $id): bool
     {
         if (!isset($this->data[$domain])) {

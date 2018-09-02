@@ -27,14 +27,14 @@ class TranslatorConfig extends InjectableConfig
      * @var array
      */
     protected $config = [
-        'locale'           => '',
-        'fallbackLocale'   => '',
-        'localesDirectory' => '',
-        'cacheLocales'     => true,
-        'autoRegister'     => true,
-        'domains'          => [],
-        'loaders'          => [],
-        'dumpers'          => []
+        'locale'         => '',
+        'fallbackLocale' => '',
+        'directory'      => '',
+        'cacheLocales'   => true,
+        'autoRegister'   => true,
+        'domains'        => [],
+        'loaders'        => [],
+        'dumpers'        => []
     ];
 
     public function __construct(array $config = [])
@@ -95,7 +95,7 @@ class TranslatorConfig extends InjectableConfig
      */
     public function localesDirectory(): string
     {
-        return $this->config['localesDirectory'];
+        return $this->config['localesDirectory'] ?? $this->config['directory'];
     }
 
     /**
@@ -105,7 +105,7 @@ class TranslatorConfig extends InjectableConfig
      */
     public function localeDirectory(string $locale): string
     {
-        return $this->config['localesDirectory'] . $locale . '/';
+        return $this->localesDirectory() . $locale . '/';
     }
 
     /**
