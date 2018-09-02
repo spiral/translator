@@ -71,5 +71,9 @@ class TraitTest extends TestCase
         ContainerScope::runScope($this->container, function () {
             $this->assertSame("translation", $this->say("message"));
         });
+
+        ContainerScope::runScope($this->container, function () {
+            $this->assertSame("translation", $this->say("[[message]]"));
+        });
     }
 }
