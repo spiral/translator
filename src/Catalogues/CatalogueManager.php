@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Locales;
+namespace Spiral\Translator\Catalogues;
 
 use Spiral\Core\MemoryInterface;
 use Spiral\Translator\Catalogue;
@@ -25,7 +25,7 @@ class CatalogueManager implements LocalesInterface
     /** @var TranslatorConfig */
     private $config = null;
 
-    /** @var \Spiral\Translator\Locales\CatalogueLoader */
+    /** @var \Spiral\Translator\Catalogues\CatalogueLoader */
     private $loader;
 
     /** @var MemoryInterface */

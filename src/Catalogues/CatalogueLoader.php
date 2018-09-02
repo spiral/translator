@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Locales;
+namespace Spiral\Translator\Catalogues;
 
 use Spiral\Debug\Traits\LoggerTrait;
 use Spiral\Translator\Catalogue;

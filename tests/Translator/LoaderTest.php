@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Loaders\PhpFileLoader;
-use Spiral\Translator\Locales\CatalogueLoader;
+use Spiral\Translator\Catalogues\CatalogueLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class LoaderTest extends TestCase

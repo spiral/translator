@@ -14,7 +14,7 @@ use Spiral\Core\MemoryInterface;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Configs\TranslatorConfig;
 use Spiral\Translator\Loaders\PhpFileLoader;
-use Spiral\Translator\Locales\CatalogueManager;
+use Spiral\Translator\Catalogues\CatalogueManager;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class LocalesTest extends TestCase
