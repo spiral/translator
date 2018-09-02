@@ -30,7 +30,7 @@ class TranslatorTest extends TestCase
 
     public function testLocale()
     {
-        $translator = $this->makeTranslator();
+        $translator = $this->translator();
         $this->assertSame('en', $translator->getLocale());
 
         $translator->setLocale('ru');
@@ -42,13 +42,13 @@ class TranslatorTest extends TestCase
      */
     public function testLocaleException()
     {
-        $translator = $this->makeTranslator();
+        $translator = $this->translator();
         $translator->setLocale('de');
     }
 
     public function testDomains()
     {
-        $translator = $this->makeTranslator();
+        $translator = $this->translator();
 
         $this->assertSame('spiral', $translator->resolveDomain('spiral-views'));
         $this->assertSame('messages', $translator->resolveDomain('vendor-views'));
@@ -56,20 +56,20 @@ class TranslatorTest extends TestCase
 
     public function testCatalogues()
     {
-        $translator = $this->makeTranslator();
+        $translator = $this->translator();
         $this->assertCount(2, $translator->getCatalogues()->getLocales());
     }
 
     public function testTrans()
     {
-        $translator = $this->makeTranslator();
+        $translator = $this->translator();
         $this->assertSame('message', $translator->trans('message'));
 
         $translator->setLocale('ru');
         $this->assertSame('translation', $translator->trans('message'));
     }
 
-    protected function makeTranslator(): Translator
+    protected function translator(): Translator
     {
         $container = new Container();
         $container->bind(MemoryInterface::class, new NullMemory());

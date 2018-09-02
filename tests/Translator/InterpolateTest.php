@@ -27,7 +27,7 @@ class InterpolateTest extends TestCase
     {
         $this->assertSame(
             "Welcome, Antony!",
-            $this->makeTranslator()->trans("Welcome, Antony!", ['name' => 'Antony'])
+            $this->translator()->trans("Welcome, Antony!", ['name' => 'Antony'])
         );
     }
 
@@ -35,11 +35,11 @@ class InterpolateTest extends TestCase
     {
         $this->assertSame(
             "Bye, Antony!",
-            $this->makeTranslator()->trans("Bye, Antony!", ['Antony'])
+            $this->translator()->trans("Bye, Antony!", ['Antony'])
         );
     }
 
-    protected function makeTranslator(): Translator
+    protected function translator(): Translator
     {
         $container = new Container();
         $container->bind(MemoryInterface::class, new NullMemory());
