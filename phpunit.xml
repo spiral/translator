@@ -13,7 +13,7 @@
 >
 
     <testsuites>
-        <testsuite name="Translator, Interfaces and Auto-Indexation">
+        <testsuite name="Translator, Static Analysis and Auto-Indexation">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

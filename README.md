@@ -1,4 +1,4 @@
-Translator, Static Analysis based string indexation
+Translator, Static Analysis and Auto-Indexation
 ================================
 [![Latest Stable Version](https://poser.pugx.org/spiral/translator/version)](https://packagist.org/packages/spiral/translator)
 [![Build Status](https://travis-ci.org/spiral/translator.svg?branch=master)](https://travis-ci.org/spiral/translator)
