@@ -8,7 +8,7 @@
 
 namespace Spiral\Translator;
 
-use Spiral\Debug\Traits\LoggerTrait;
+use Spiral\Logger\Traits\LoggerTrait;
 use Spiral\Tokenizer\ClassesInterface;
 use Spiral\Tokenizer\InvocationsInterface;
 use Spiral\Tokenizer\Reflections\ReflectionArgument;

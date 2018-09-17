@@ -8,7 +8,7 @@
 
 namespace Spiral\Translator\Catalogues;
 
-use Spiral\Debug\Traits\LoggerTrait;
+use Spiral\Logger\Traits\LoggerTrait;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Configs\TranslatorConfig;
