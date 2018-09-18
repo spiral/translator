@@ -8,13 +8,8 @@
 
 namespace Spiral\Translator\Tests\Stubs;
 
-/**
- * @inherit-messages
- */
 class FromParent extends MessageStub
 {
-    const INHERIT_TRANSLATIONS = true;
-
     private $other = [
         '[[new-mess]]'
     ];

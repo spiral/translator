@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Catalogues;
+namespace Spiral\Translator\Catalogue;
 
 use Spiral\Translator\CatalogueInterface;
 

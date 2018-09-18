@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Exceptions;
+namespace Spiral\Translator\Exception;
 
 /**
  * Invalid or unknown locale.

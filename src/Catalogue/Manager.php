@@ -6,18 +6,18 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Catalogues;
+namespace Spiral\Translator\Catalogue;
 
 use Spiral\Core\MemoryInterface;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\CataloguesInterface;
-use Spiral\Translator\Exceptions\LocaleException;
+use Spiral\Translator\Exception\LocaleException;
 
 /**
  * Manages catalogues and their cached data.
  */
-class Manager implements CataloguesInterface
+final class Manager implements CataloguesInterface
 {
     const MEMORY = "locales";
 

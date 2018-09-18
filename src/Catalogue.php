@@ -9,14 +9,14 @@
 
 namespace Spiral\Translator;
 
-use Spiral\Translator\Exceptions\CatalogueException;
+use Spiral\Translator\Exception\CatalogueException;
 use Symfony\Component\Translation\MessageCatalogue;
 
 /**
  * Similar to Symfony catalogue, however this one does not operate with fallback locale.
  * Provides ability to cache domains in memory.
  */
-class Catalogue implements CatalogueInterface
+final class Catalogue implements CatalogueInterface
 {
     /** @var string */
     private $locale;

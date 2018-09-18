@@ -7,7 +7,7 @@
  * @copyright ©2009-2011
  */
 
-namespace Spiral\Translator\Exceptions;
+namespace Spiral\Translator\Exception;
 
 /**
  * When locale contain invalid pluralization string.

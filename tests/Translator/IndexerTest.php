@@ -11,12 +11,12 @@ namespace Spiral\Tests\Translator;
 use PHPUnit\Framework\TestCase;
 use Spiral\Core\BootloadManager;
 use Spiral\Core\Container;
-use Spiral\Tokenizer\Bootloaders\TokenizerBootloader;
+use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
 use Spiral\Tokenizer\ClassesInterface;
-use Spiral\Tokenizer\Configs\TokenizerConfig;
+use Spiral\Tokenizer\Config\TokenizerConfig;
 use Spiral\Tokenizer\InvocationsInterface;
 use Spiral\Translator\Catalogue;
-use Spiral\Translator\Configs\TranslatorConfig;
+use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Indexer;
 use Spiral\Translator\Traits\TranslatorTrait;
 

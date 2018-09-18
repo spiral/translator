@@ -8,7 +8,7 @@
 
 use Spiral\Core\ContainerScope;
 use Spiral\Core\Exceptions\ScopeException;
-use Spiral\Translator\Exceptions\TranslatorException;
+use Spiral\Translator\Exception\TranslatorException;
 use Spiral\Translator\TranslatorInterface;
 
 if (!function_exists('l')) {

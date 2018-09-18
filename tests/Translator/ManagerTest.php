@@ -12,11 +12,11 @@ use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Spiral\Core\MemoryInterface;
 use Spiral\Translator\CatalogueInterface;
-use Spiral\Translator\Catalogues\Loader;
-use Spiral\Translator\Catalogues\Manager;
-use Spiral\Translator\Configs\TranslatorConfig;
-use Spiral\Translator\Exceptions\LocaleException;
-use Spiral\Translator\Loaders\PhpFileLoader;
+use Spiral\Translator\Catalogue\Loader;
+use Spiral\Translator\Catalogue\Manager;
+use Spiral\Translator\Config\TranslatorConfig;
+use Spiral\Translator\Exception\LocaleException;
+use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class ManagerTest extends TestCase
@@ -161,7 +161,7 @@ class ManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Spiral\Translator\Exceptions\LocaleException
+     * @expectedException \Spiral\Translator\Exception\LocaleException
      */
     public function testException()
     {

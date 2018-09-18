@@ -11,9 +11,9 @@ namespace Spiral\Translator;
 use Spiral\Logger\Traits\LoggerTrait;
 use Spiral\Tokenizer\ClassesInterface;
 use Spiral\Tokenizer\InvocationsInterface;
-use Spiral\Tokenizer\Reflections\ReflectionArgument;
-use Spiral\Tokenizer\Reflections\ReflectionInvocation;
-use Spiral\Translator\Configs\TranslatorConfig;
+use Spiral\Tokenizer\Reflection\ReflectionArgument;
+use Spiral\Tokenizer\Reflection\ReflectionInvocation;
+use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Traits\TranslatorTrait;
 
 /**
@@ -25,27 +25,25 @@ use Spiral\Translator\Traits\TranslatorTrait;
  * disable property indexation using @do-not-index doc comment. Translator can merge strings with
  * parent data, set class constant INHERIT_TRANSLATIONS to true.
  */
-class Indexer
+final class Indexer
 {
     use LoggerTrait;
 
-    /**
-     * @var TranslatorConfig
-     */
+    /** @var TranslatorConfig */
     private $config;
 
     /**
      * Catalogue to aggregate messages into.
      *
-     * @var Catalogue
+     * @var CatalogueInterface
      */
     private $catalogue;
 
     /**
-     * @param TranslatorConfig $config
-     * @param Catalogue        $catalogue
+     * @param TranslatorConfig   $config
+     * @param CatalogueInterface $catalogue
      */
-    public function __construct(TranslatorConfig $config, Catalogue $catalogue)
+    public function __construct(TranslatorConfig $config, CatalogueInterface $catalogue)
     {
         $this->config = $config;
         $this->catalogue = $catalogue;
@@ -82,11 +80,7 @@ class Indexer
     public function indexClasses(ClassesInterface $locator)
     {
         foreach ($locator->getClasses(TranslatorTrait::class) as $class) {
-            $strings = $this->fetchMessages(
-                $class,
-                strpos($class->getDocComment(), '@inherit-messages') !== false
-            );
-
+            $strings = $this->fetchMessages($class, true);
             foreach ($strings as $string) {
                 $this->registerMessage($class->getName(), $string);
             }

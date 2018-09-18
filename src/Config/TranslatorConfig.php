@@ -6,7 +6,7 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Configs;
+namespace Spiral\Translator\Config;
 
 use Spiral\Core\InjectableConfig;
 use Spiral\Translator\Matcher;

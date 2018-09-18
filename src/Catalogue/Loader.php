@@ -6,16 +6,16 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Catalogues;
+namespace Spiral\Translator\Catalogue;
 
 use Spiral\Logger\Traits\LoggerTrait;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\CatalogueInterface;
-use Spiral\Translator\Configs\TranslatorConfig;
+use Spiral\Translator\Config\TranslatorConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-class Loader implements LoaderInterface
+final class Loader implements LoaderInterface
 {
     use LoggerTrait;
 

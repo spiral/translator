@@ -26,7 +26,7 @@ interface CataloguesInterface
      * @param string $locale
      *
      * @return CatalogueInterface
-     * @throws \Spiral\Translator\Exceptions\LocaleException
+     * @throws \Spiral\Translator\Exception\LocaleException
      */
     public function load(string $locale): CatalogueInterface;
 
@@ -52,7 +52,7 @@ interface CataloguesInterface
      * @param string $locale
      *
      * @return CatalogueInterface
-     * @throws \Spiral\Translator\Exceptions\LocaleException
+     * @throws \Spiral\Translator\Exception\LocaleException
      */
     public function get(string $locale): CatalogueInterface;
 }

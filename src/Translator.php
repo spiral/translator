@@ -9,9 +9,9 @@
 namespace Spiral\Translator;
 
 use Spiral\Core\Container\SingletonInterface;
-use Spiral\Translator\Configs\TranslatorConfig;
-use Spiral\Translator\Exceptions\LocaleException;
-use Spiral\Translator\Exceptions\PluralizationException;
+use Spiral\Translator\Config\TranslatorConfig;
+use Spiral\Translator\Exception\LocaleException;
+use Spiral\Translator\Exception\PluralizationException;
 use Symfony\Component\Translation\MessageSelector;
 
 /**

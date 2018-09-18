@@ -6,13 +6,12 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Catalogues;
-
+namespace Spiral\Translator\Catalogue;
 
 use Spiral\Translator\CatalogueInterface;
-use Spiral\Translator\Exceptions\LocaleException;
+use Spiral\Translator\Exception\LocaleException;
 
-class StaticLoader implements LoaderInterface
+final class StaticLoader implements LoaderInterface
 {
     /**
      * @var CatalogueInterface[]

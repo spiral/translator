@@ -15,11 +15,11 @@ use Spiral\Core\Container;
 use Spiral\Core\ContainerScope;
 use Spiral\Core\MemoryInterface;
 use Spiral\Core\NullMemory;
-use Spiral\Translator\Bootloaders\TranslatorBootloader;
-use Spiral\Translator\Configs\TranslatorConfig;
-use Spiral\Translator\Loaders\PhpFileLoader;
+use Spiral\Translator\Bootloader\TranslatorBootloader;
+use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Traits\TranslatorTrait;
 use Spiral\Translator\TranslatorInterface;
+use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class TraitTest extends TestCase

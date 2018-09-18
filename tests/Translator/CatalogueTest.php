@@ -42,7 +42,7 @@ class CatalogueTest extends TestCase
     }
 
     /**
-     * @expectedException \Spiral\Translator\Exceptions\CatalogueException
+     * @expectedException \Spiral\Translator\Exception\CatalogueException
      * @expectedExceptionMessage Undefined string in domain 'domain'
      */
     public function testUndefinedString()

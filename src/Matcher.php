@@ -13,7 +13,7 @@ namespace Spiral\Translator;
  * post.*
  * post.(save|delete)
  */
-class Matcher
+final class Matcher
 {
     /**
      * @param string $string

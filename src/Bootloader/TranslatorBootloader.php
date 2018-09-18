@@ -6,12 +6,12 @@
  * @author    Anton Titov (Wolfy-J)
  */
 
-namespace Spiral\Translator\Bootloaders;
+namespace Spiral\Translator\Bootloader;
 
-use Spiral\Core\Bootloaders\Bootloader;
-use Spiral\Translator\Catalogues\Loader;
-use Spiral\Translator\Catalogues\LoaderInterface;
-use Spiral\Translator\Catalogues\Manager;
+use Spiral\Core\Bootloader\Bootloader;
+use Spiral\Translator\Catalogue\Loader;
+use Spiral\Translator\Catalogue\LoaderInterface;
+use Spiral\Translator\Catalogue\Manager;
 use Spiral\Translator\CataloguesInterface;
 use Spiral\Translator\Translator;
 use Spiral\Translator\TranslatorInterface;

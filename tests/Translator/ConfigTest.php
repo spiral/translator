@@ -9,11 +9,11 @@
 namespace Spiral\Tests\Translator;
 
 use PHPUnit\Framework\TestCase;
-use Spiral\Translator\Configs\TranslatorConfig;
-use Spiral\Translator\Loaders\PhpFileLoader;
+use Spiral\Translator\Config\TranslatorConfig;
 use Symfony\Component\Translation\Dumper\DumperInterface;
 use Symfony\Component\Translation\Dumper\PoFileDumper;
 use Symfony\Component\Translation\Loader\LoaderInterface;
+use Symfony\Component\Translation\Loader\PhpFileLoader;
 
 class ConfigTest extends TestCase
 {

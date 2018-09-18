@@ -40,7 +40,7 @@ interface CatalogueInterface
      *
      * @return string
      *
-     * @throws \Spiral\Translator\Exceptions\CatalogueException
+     * @throws \Spiral\Translator\Exception\CatalogueException
      */
     public function get(string $domain, string $id): string;
 
