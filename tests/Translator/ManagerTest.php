@@ -12,8 +12,8 @@ use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Spiral\Core\MemoryInterface;
 use Spiral\Translator\CatalogueInterface;
-use Spiral\Translator\Catalogue\Loader;
-use Spiral\Translator\Catalogue\Manager;
+use Spiral\Translator\Catalogue\CatalogueLoader;
+use Spiral\Translator\Catalogue\CatalogueManager;
 use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Exception\LocaleException;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
@@ -27,7 +27,7 @@ class ManagerTest extends TestCase
         $memory->shouldReceive('loadData')->andReturn(null);
         $memory->shouldReceive('saveData')->andReturn(null);
 
-        $manager = new Manager(new Loader(new TranslatorConfig([
+        $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -46,7 +46,7 @@ class ManagerTest extends TestCase
         $memory->shouldReceive('loadData')->andReturn(['en', 'ru']);
         $memory->shouldNotReceive('saveData')->andReturn(null);
 
-        $manager = new Manager(new Loader(new TranslatorConfig([
+        $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -63,10 +63,10 @@ class ManagerTest extends TestCase
     {
         $memory = m::mock(MemoryInterface::class);
         $memory->shouldReceive('loadData')->with(
-            Manager::MEMORY
+            CatalogueManager::MEMORY
         )->andReturn(['en', 'ru']);
 
-        $manager = new Manager(new Loader(new TranslatorConfig([
+        $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -76,7 +76,7 @@ class ManagerTest extends TestCase
         )), $memory);
 
         $memory->shouldReceive('loadData')->with(
-            Manager::MEMORY . '/ru'
+            CatalogueManager::MEMORY . '/ru'
         )->andReturn([]);
 
         $catalogue = $manager->get("ru");
@@ -119,11 +119,11 @@ class ManagerTest extends TestCase
     {
         $memory = m::mock(MemoryInterface::class);
         $memory->shouldReceive('loadData')->with(
-            Manager::MEMORY
+            CatalogueManager::MEMORY
         )->andReturn(['en', 'ru']);
 
         $memory->shouldReceive('loadData')->with(
-            Manager::MEMORY . '/ru'
+            CatalogueManager::MEMORY . '/ru'
         )->andReturn([
             'messages' => [
                 'message' => 'new message'
@@ -134,7 +134,7 @@ class ManagerTest extends TestCase
             ]
         ]);
 
-        $manager = new Manager(new Loader(new TranslatorConfig([
+        $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,
@@ -144,7 +144,7 @@ class ManagerTest extends TestCase
         )), $memory);
 
         $memory->shouldReceive('loadData')->with(
-            Manager::MEMORY . '/ru'
+            CatalogueManager::MEMORY . '/ru'
         )->andReturn([]);
 
         $catalogue = $manager->get("ru");
@@ -153,9 +153,9 @@ class ManagerTest extends TestCase
         $this->assertTrue($catalogue->has('messages', 'message'));
         $this->assertSame('new message', $catalogue->get('messages', 'message'));
 
-        $memory->shouldReceive('saveData')->with(Manager::MEMORY, null);
-        $memory->shouldReceive('saveData')->with(Manager::MEMORY . '/ru', null);
-        $memory->shouldReceive('saveData')->with(Manager::MEMORY . '/en', null);
+        $memory->shouldReceive('saveData')->with(CatalogueManager::MEMORY, null);
+        $memory->shouldReceive('saveData')->with(CatalogueManager::MEMORY . '/ru', null);
+        $memory->shouldReceive('saveData')->with(CatalogueManager::MEMORY . '/en', null);
 
         $manager->reset();
     }
@@ -167,12 +167,12 @@ class ManagerTest extends TestCase
     {
         $memory = m::mock(MemoryInterface::class);
         $memory->shouldReceive('loadData')->with(
-            Manager::MEMORY
+            CatalogueManager::MEMORY
         )->andReturn(['en']);
 
         $memory->shouldReceive('saveData')->with()->andReturn(null);
 
-        $manager = new Manager(new Loader(new TranslatorConfig([
+        $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
                 'directory' => __DIR__ . '/fixtures/locales/',
                 'loaders'   => [
                     'php' => PhpFileLoader::class,

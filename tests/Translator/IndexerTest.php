@@ -9,11 +9,11 @@
 namespace Spiral\Tests\Translator;
 
 use PHPUnit\Framework\TestCase;
-use Spiral\Core\BootloadManager;
 use Spiral\Core\Container;
-use Spiral\Tokenizer\Bootloader\TokenizerBootloader;
 use Spiral\Tokenizer\ClassesInterface;
+use Spiral\Tokenizer\ClassLocator;
 use Spiral\Tokenizer\Config\TokenizerConfig;
+use Spiral\Tokenizer\InvocationLocator;
 use Spiral\Tokenizer\InvocationsInterface;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\Config\TranslatorConfig;
@@ -88,8 +88,8 @@ class IndexerTest extends TestCase
     protected function tContainer(): Container
     {
         $container = new Container();
-        $bootloader = new BootloadManager($container);
-        $bootloader->bootload([TokenizerBootloader::class]);
+        $container->bind(ClassesInterface::class, ClassLocator::class);
+        $container->bind(InvocationsInterface::class, InvocationLocator::class);
 
         $container->bind(TokenizerConfig::class, new TokenizerConfig([
             'directories' => [__DIR__],

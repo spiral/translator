@@ -10,14 +10,18 @@ namespace Spiral\Tests\Translator;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Spiral\Core\BootloadManager;
 use Spiral\Core\Container;
 use Spiral\Core\ContainerScope;
 use Spiral\Core\MemoryInterface;
 use Spiral\Core\NullMemory;
 use Spiral\Translator\Bootloader\TranslatorBootloader;
+use Spiral\Translator\Catalogue\CatalogueLoader;
+use Spiral\Translator\Catalogue\CatalogueManager;
+use Spiral\Translator\Catalogue\LoaderInterface;
+use Spiral\Translator\CataloguesInterface;
 use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Traits\TranslatorTrait;
+use Spiral\Translator\Translator;
 use Spiral\Translator\TranslatorInterface;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
@@ -48,8 +52,9 @@ class TraitTest extends TestCase
             ]
         ]));
 
-        $bootloader = new BootloadManager($this->container);
-        $bootloader->bootload([TranslatorBootloader::class]);
+        $this->container->bindSingleton(TranslatorInterface::class, Translator::class);
+        $this->container->bindSingleton(CataloguesInterface::class, CatalogueManager::class);
+        $this->container->bind(LoaderInterface::class, CatalogueLoader::class);
     }
 
     public function testScopeException()

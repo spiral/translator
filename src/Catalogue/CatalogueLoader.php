@@ -15,7 +15,7 @@ use Spiral\Translator\Config\TranslatorConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-final class Loader implements LoaderInterface
+final class CatalogueLoader implements LoaderInterface
 {
     use LoggerTrait;
 

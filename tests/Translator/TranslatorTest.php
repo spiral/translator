@@ -13,7 +13,10 @@ use Spiral\Core\BootloadManager;
 use Spiral\Core\Container;
 use Spiral\Core\MemoryInterface;
 use Spiral\Core\NullMemory;
-use Spiral\Translator\Bootloader\TranslatorBootloader;
+use Spiral\Translator\Catalogue\CatalogueManager;
+use Spiral\Translator\Catalogue\CatalogueLoader;
+use Spiral\Translator\Catalogue\LoaderInterface;
+use Spiral\Translator\CataloguesInterface;
 use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Translator;
 use Spiral\Translator\TranslatorInterface;
@@ -88,8 +91,9 @@ class TranslatorTest extends TestCase
             ]
         ]));
 
-        $bootloader = new BootloadManager($container);
-        $bootloader->bootload([TranslatorBootloader::class]);
+        $container->bindSingleton(TranslatorInterface::class, Translator::class);
+        $container->bindSingleton(CataloguesInterface::class, CatalogueManager::class);
+        $container->bind(LoaderInterface::class, CatalogueLoader::class);
 
         return $container->get(TranslatorInterface::class);
     }

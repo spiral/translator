@@ -17,7 +17,7 @@ use Spiral\Translator\Exception\LocaleException;
 /**
  * Manages catalogues and their cached data.
  */
-final class Manager implements CataloguesInterface
+final class CatalogueManager implements CataloguesInterface
 {
     const MEMORY = "locales";
 
