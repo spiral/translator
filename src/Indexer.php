@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -141,7 +142,7 @@ final class Indexer
         $target = $reflection->getDefaultProperties() + $reflection->getConstants();
 
         foreach ($reflection->getProperties() as $property) {
-            if (strpos($property->getDocComment(), "@do-not-index")) {
+            if (is_string($property->getDocComment()) && strpos($property->getDocComment(), "@do-not-index")) {
                 unset($target[$property->getName()]);
             }
         }

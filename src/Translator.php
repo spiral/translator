@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -12,7 +13,7 @@ use Spiral\Core\Container\SingletonInterface;
 use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Exception\LocaleException;
 use Spiral\Translator\Exception\PluralizationException;
-use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Translation\IdentityTranslator;
 
 /**
  * Implementation of Symfony\TranslatorInterface with memory caching, automatic message
@@ -28,7 +29,7 @@ class Translator implements TranslatorInterface, SingletonInterface
 
     /**
      * @invisible
-     * @var MessageSelector
+     * @var IdentityTranslator
      */
     private $selector;
 
@@ -37,12 +38,12 @@ class Translator implements TranslatorInterface, SingletonInterface
 
     /**
      * @param TranslatorConfig    $config
-     * @param MessageSelector     $selector
+     * @param IdentityTranslator  $selector
      * @param CataloguesInterface $locales
      */
     public function __construct(
         TranslatorConfig $config,
-        MessageSelector $selector,
+        IdentityTranslator $selector,
         CataloguesInterface $locales
     ) {
         $this->config = $config;
@@ -131,21 +132,22 @@ class Translator implements TranslatorInterface, SingletonInterface
         $domain = $domain ?? $this->config->defaultDomain();
         $locale = $locale ?? $this->locale;
 
-        if (empty($parameters['n']) && is_numeric($number)) {
-            $parameters['n'] = number_format($number);
-        }
-
         try {
             $message = $this->get($locale, $domain, $id);
 
-            $pluralized = $this->selector->choose(
+            $pluralized = $this->selector->trans(
                 $message,
-                $number,
+                ['%count%' => $number],
+                null,
                 $locale
             );
         } catch (\InvalidArgumentException $e) {
             //Wrapping into more explanatory exception
             throw new PluralizationException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        if (empty($parameters['n']) && is_numeric($number)) {
+            $parameters['n'] = $number;
         }
 
         return self::interpolate($pluralized, $parameters);

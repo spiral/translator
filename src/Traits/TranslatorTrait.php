@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -9,7 +10,7 @@
 namespace Spiral\Translator\Traits;
 
 use Spiral\Core\ContainerScope;
-use Spiral\Core\Exceptions\ScopeException;
+use Spiral\Core\Exception\ScopeException;
 use Spiral\Translator\Translator;
 use Spiral\Translator\TranslatorInterface;
 

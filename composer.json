@@ -14,7 +14,7 @@
     "spiral/core": "^1.0",
     "spiral/logger": "^1.0",
     "spiral/tokenizer": "^2.0",
-    "symfony/translation": "^4.1"
+    "symfony/translation": "4.2.3"
   },
   "require-dev": {
     "phpunit/phpunit": "~7.0",

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Spiral Framework.
  *
@@ -13,7 +14,7 @@ namespace Spiral\Translator;
  * string sets (bundles) into one bigger domain. Such technique provides ability to collect and
  * generate location files based on application source without extra code.
  */
-interface TranslatorInterface extends \Symfony\Component\Translation\TranslatorInterface
+interface TranslatorInterface extends \Symfony\Contracts\Translation\TranslatorInterface
 {
     /**
      * Default set of braces to be used in classes or views for indication of translatable content.

@@ -35,15 +35,36 @@ class PluralizeTest extends TestCase
         );
 
         $this->assertSame(
-            '2,220 dogs',
-            $this->translator()->transChoice("{n} dog|{n} dogs", 2220)
+            '2221 dogs',
+            $this->translator()->transChoice("{n} dog|{n} dogs", 2220, ['n' => 2221])
         );
 
         $this->assertSame(
-            '100 dogs',
-            $this->translator()->transChoice("{n} dog|{n} dogs", 10, [
-                'n' => 100
+            '2221 dog',
+            $this->translator()->transChoice("{n} dog|{n} dogs", 1, ['n' => 2221])
+        );
+    }
+
+    public function testInterpolation()
+    {
+        $this->assertSame(
+            '20 dogs',
+            $this->translator()->transChoice("{n} dog and {c} cat|{n} dogs", 100, [
+                'n' => 20,
+                'c' => 3
             ])
+        );
+
+        $this->assertSame(
+            '1 dog and 3 cat',
+            $this->translator()->transChoice("{n} dog and {c} cat|{n} dogs", 1, [
+                'c' => 3
+            ])
+        );
+
+        $this->assertSame(
+            '2,220 dogs',
+            $this->translator()->transChoice("{n} dog|{n} dogs", 2, ['n' => number_format(2220)])
         );
     }
 
