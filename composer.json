@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": "^7.1",
+    "php": "^7.1.3",
     "spiral/core": "^1.0",
     "spiral/logger": "^1.0",
     "spiral/tokenizer": "^2.0",
