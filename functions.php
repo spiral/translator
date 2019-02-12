@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Spiral Framework.
  *
@@ -7,7 +9,7 @@
  */
 
 use Spiral\Core\ContainerScope;
-use Spiral\Core\Exceptions\ScopeException;
+use Spiral\Core\Exception\ScopeException;
 use Spiral\Translator\Exception\TranslatorException;
 use Spiral\Translator\TranslatorInterface;
 
@@ -73,6 +75,6 @@ if (!function_exists('p')) {
         /** @var TranslatorInterface $translator */
         $translator = $container->get(TranslatorInterface::class);
 
-        return $translator->transChoice($string, $number, $options, $domain);
+        return $translator->trans($string, ['%count%' => $number] + $options, $domain);
     }
 }
