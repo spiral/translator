@@ -15,8 +15,8 @@ use Spiral\Core\MemoryInterface;
 use Spiral\Core\NullMemory;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\Catalogue\LoaderInterface;
-use Spiral\Translator\Catalogue\StaticLoader;
-use Spiral\Translator\CataloguesInterface;
+use Spiral\Translator\Catalogue\RuntimeLoader;
+use Spiral\Translator\CatalogueManagerInterface;
 use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Translator;
 use Spiral\Translator\TranslatorInterface;
@@ -50,7 +50,6 @@ class InterpolateTest extends TestCase
     protected function translator(): Translator
     {
         $container = new Container();
-        $container->bind(MemoryInterface::class, new NullMemory());
         $container->bind(TranslatorConfig::class, new TranslatorConfig([
             'locale'  => 'en',
             'domains' => [
@@ -59,10 +58,10 @@ class InterpolateTest extends TestCase
         ]));
 
         $container->bindSingleton(TranslatorInterface::class, Translator::class);
-        $container->bindSingleton(CataloguesInterface::class, Catalogue\CatalogueManager::class);
+        $container->bindSingleton(CatalogueManagerInterface::class, Catalogue\CatalogueManager::class);
         $container->bind(LoaderInterface::class, Catalogue\CatalogueLoader::class);
 
-        $loader = new StaticLoader();
+        $loader = new RuntimeLoader();
         $loader->addCatalogue('en', new Catalogue('en', [
             'messages' => [
                 "Welcome, {name}!" => "Welcome, {name}!",

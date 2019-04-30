@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator;
 
@@ -134,7 +134,6 @@ final class Indexer
      *
      * @param \ReflectionClass $reflection
      * @param bool             $inherit
-     *
      * @return array
      */
     private function fetchMessages(\ReflectionClass $reflection, bool $inherit = false)
@@ -170,7 +169,6 @@ final class Indexer
      * Get associated domain.
      *
      * @param ReflectionInvocation $invocation
-     *
      * @return string
      */
     private function invocationDomain(ReflectionInvocation $invocation): string
@@ -178,7 +176,7 @@ final class Indexer
         //Translation using default bundle
         $domain = $this->config->defaultDomain();
 
-        if ($invocation->getName() == 'say') {
+        if ($invocation->getName() === 'say') {
             //Let's try to confirm domain
             $domain = $this->config->resolveDomain($invocation->getClass());
         }
@@ -198,7 +196,7 @@ final class Indexer
                 }
         }
 
-        if (!empty($argument) && $argument->getType() == ReflectionArgument::STRING) {
+        if (!empty($argument) && $argument->getType() === ReflectionArgument::STRING) {
             //Domain specified in arguments
             $domain = $this->config->resolveDomain($argument->stringValue());
         }
@@ -210,7 +208,6 @@ final class Indexer
      * Remove [[ and ]] braces from translated string.
      *
      * @param string $string
-     *
      * @return string
      */
     private function prepareMessage(string $string): string

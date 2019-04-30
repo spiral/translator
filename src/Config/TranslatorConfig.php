@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator\Config;
 
@@ -14,7 +14,7 @@ use Spiral\Translator\Matcher;
 use Symfony\Component\Translation\Dumper\DumperInterface;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
-class TranslatorConfig extends InjectableConfig
+final class TranslatorConfig extends InjectableConfig
 {
     /**
      * Configuration section.
@@ -101,7 +101,6 @@ class TranslatorConfig extends InjectableConfig
 
     /**
      * @param string $locale
-     *
      * @return string
      */
     public function localeDirectory(string $locale): string
@@ -113,7 +112,6 @@ class TranslatorConfig extends InjectableConfig
      * Get domain name associated with given bundle.
      *
      * @param string $bundle
-     *
      * @return string
      */
     public function resolveDomain(string $bundle): string
@@ -134,7 +132,6 @@ class TranslatorConfig extends InjectableConfig
 
     /**
      * @param string $extension
-     *
      * @return bool
      */
     public function hasLoader(string $extension): bool
@@ -144,7 +141,6 @@ class TranslatorConfig extends InjectableConfig
 
     /**
      * @param string $extension
-     *
      * @return LoaderInterface
      */
     public function getLoader(string $extension): LoaderInterface
@@ -156,7 +152,6 @@ class TranslatorConfig extends InjectableConfig
 
     /**
      * @param string $dumper
-     *
      * @return bool
      */
     public function hasDumper(string $dumper): bool
@@ -166,7 +161,6 @@ class TranslatorConfig extends InjectableConfig
 
     /**
      * @param string $dumper
-     *
      * @return DumperInterface
      */
     public function getDumper(string $dumper): DumperInterface

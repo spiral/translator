@@ -1,12 +1,12 @@
 <?php
-declare(strict_types=1);
 /**
- * Spiral Framework, SpiralScout LLC.
+ * Spiral Framework.
  *
- * @package   spiralFramework
+ * @license   MIT
  * @author    Anton Titov (Wolfy-J)
- * @copyright ©2009-2011
  */
+declare(strict_types=1);
+
 
 namespace Spiral\Translator\Exception;
 

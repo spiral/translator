@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator;
 
@@ -31,7 +31,6 @@ final class Matcher
      *
      * @param string $string
      * @param string $pattern
-     *
      * @return bool
      */
     public function matches(string $string, string $pattern): bool
@@ -48,7 +47,6 @@ final class Matcher
 
     /**
      * @param string $pattern
-     *
      * @return string
      */
     private function getRegex(string $pattern): string

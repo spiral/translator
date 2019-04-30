@@ -1,35 +1,32 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator\Catalogue;
 
-use Spiral\Core\MemoryInterface;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\CatalogueInterface;
-use Spiral\Translator\CataloguesInterface;
+use Spiral\Translator\CatalogueManagerInterface;
 use Spiral\Translator\Exception\LocaleException;
 
 /**
  * Manages catalogues and their cached data.
  */
-final class CatalogueManager implements CataloguesInterface
+final class CatalogueManager implements CatalogueManagerInterface
 {
-    const MEMORY = "locales";
-
     /** @var LoaderInterface */
     private $loader;
 
     /**
-     * @invisible
-     * @var MemoryInterface
+     * @internal
+     * @var CacheInterface
      */
-    private $memory = null;
+    private $cache = null;
 
     /** @var array */
     private $locales = [];
@@ -39,12 +36,12 @@ final class CatalogueManager implements CataloguesInterface
 
     /**
      * @param LoaderInterface $loader
-     * @param MemoryInterface $memory
+     * @param CacheInterface  $cache
      */
-    public function __construct(LoaderInterface $loader, MemoryInterface $memory)
+    public function __construct(LoaderInterface $loader, CacheInterface $cache = null)
     {
         $this->loader = $loader;
-        $this->memory = $memory;
+        $this->cache = $cache ?? new NullCache();
     }
 
     /**
@@ -56,10 +53,11 @@ final class CatalogueManager implements CataloguesInterface
             return $this->locales;
         }
 
-        $this->locales = (array)$this->memory->loadData(self::MEMORY);
-        if (empty($this->locales)) {
+
+        $this->locales = (array)$this->cache->getLocales();
+        if ($this->locales === []) {
             $this->locales = $this->loader->getLocales();
-            $this->memory->saveData(self::MEMORY, $this->locales);
+            $this->cache->setLocales($this->locales);
         }
 
         return $this->locales;
@@ -78,7 +76,7 @@ final class CatalogueManager implements CataloguesInterface
             throw new LocaleException($locale);
         }
 
-        $data = (array)$this->memory->loadData(sprintf("%s/%s", self::MEMORY, $locale));
+        $data = (array)$this->cache->loadLocale($locale);
         if (!empty($data)) {
             $this->catalogues[$locale] = new Catalogue($locale, $data);
         } else {
@@ -93,10 +91,7 @@ final class CatalogueManager implements CataloguesInterface
      */
     public function save(string $locale)
     {
-        $this->memory->saveData(
-            sprintf("%s/%s", self::MEMORY, $locale),
-            $this->get($locale)->getData()
-        );
+        $this->cache->saveLocale($locale, $this->get($locale)->getData());
     }
 
     /**
@@ -120,9 +115,9 @@ final class CatalogueManager implements CataloguesInterface
      */
     public function reset()
     {
-        $this->memory->saveData(self::MEMORY, null);
+        $this->cache->setLocales(null);
         foreach ($this->getLocales() as $locale) {
-            $this->memory->saveData(sprintf("%s/%s", self::MEMORY, $locale), null);
+            $this->cache->saveLocale($locale, null);
         }
 
         $this->locales = [];

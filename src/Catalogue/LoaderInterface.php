@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator\Catalogue;
 
@@ -17,7 +17,6 @@ interface LoaderInterface
      * Check if locale data exists.
      *
      * @param string $locale
-     *
      * @return bool
      */
     public function hasLocale(string $locale): bool;
@@ -31,7 +30,6 @@ interface LoaderInterface
 
     /**
      * @param string $locale
-     *
      * @return CatalogueInterface
      */
     public function loadCatalogue(string $locale): CatalogueInterface;

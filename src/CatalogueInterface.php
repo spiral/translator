@@ -1,13 +1,15 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator;
+
+use Spiral\Translator\Exception\CatalogueException;
 
 interface CatalogueInterface
 {
@@ -28,7 +30,6 @@ interface CatalogueInterface
      *
      * @param string $domain
      * @param string $id
-     *
      * @return bool
      */
     public function has(string $domain, string $id): bool;
@@ -38,10 +39,9 @@ interface CatalogueInterface
      *
      * @param string $domain
      * @param string $id
-     *
      * @return string
      *
-     * @throws \Spiral\Translator\Exception\CatalogueException
+     * @throws CatalogueException
      */
     public function get(string $domain, string $id): string;
 

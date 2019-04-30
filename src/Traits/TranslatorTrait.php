@@ -1,11 +1,12 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
+
 
 namespace Spiral\Translator\Traits;
 
@@ -33,7 +34,6 @@ trait TranslatorTrait
      * @param string $string
      * @param array  $options Interpolation options.
      * @param string $bundle  Translation bundle, by default current class name.
-     *
      * @return string
      *
      * @throws ScopeException
@@ -55,7 +55,7 @@ trait TranslatorTrait
          */
         $translator = $container->get(TranslatorInterface::class);
 
-        if (empty($bundle)) {
+        if (is_null($bundle)) {
             $bundle = $translator->resolveDomain(static::class);
         }
 

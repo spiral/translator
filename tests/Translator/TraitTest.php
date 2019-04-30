@@ -18,7 +18,7 @@ use Spiral\Translator\Bootloader\TranslatorBootloader;
 use Spiral\Translator\Catalogue\CatalogueLoader;
 use Spiral\Translator\Catalogue\CatalogueManager;
 use Spiral\Translator\Catalogue\LoaderInterface;
-use Spiral\Translator\CataloguesInterface;
+use Spiral\Translator\CatalogueManagerInterface;
 use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Traits\TranslatorTrait;
 use Spiral\Translator\Translator;
@@ -39,7 +39,6 @@ class TraitTest extends TestCase
     {
         $this->container = new Container();
 
-        $this->container->bind(MemoryInterface::class, new NullMemory());
         $this->container->bind(TranslatorConfig::class, new TranslatorConfig([
             'locale'    => 'en',
             'directory' => __DIR__ . '/fixtures/locales/',
@@ -53,7 +52,7 @@ class TraitTest extends TestCase
         ]));
 
         $this->container->bindSingleton(TranslatorInterface::class, Translator::class);
-        $this->container->bindSingleton(CataloguesInterface::class, CatalogueManager::class);
+        $this->container->bindSingleton(CatalogueManagerInterface::class, CatalogueManager::class);
         $this->container->bind(LoaderInterface::class, CatalogueLoader::class);
     }
 

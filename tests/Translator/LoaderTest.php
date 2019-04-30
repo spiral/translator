@@ -11,7 +11,7 @@ namespace Spiral\Tests\Translator;
 use PHPUnit\Framework\TestCase;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Catalogue\CatalogueLoader;
-use Spiral\Translator\Catalogue\StaticLoader;
+use Spiral\Translator\Catalogue\RuntimeLoader;
 use Spiral\Translator\Config\TranslatorConfig;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
@@ -106,7 +106,7 @@ class LoaderTest extends TestCase
 
     public function testStaticLoader()
     {
-        $loader = new StaticLoader();
+        $loader = new RuntimeLoader();
         $this->assertFalse($loader->hasLocale('en'));
     }
 
@@ -115,7 +115,7 @@ class LoaderTest extends TestCase
      */
     public function testStaticLoaderException()
     {
-        $loader = new StaticLoader();
+        $loader = new RuntimeLoader();
         $loader->loadCatalogue('en');
     }
 }

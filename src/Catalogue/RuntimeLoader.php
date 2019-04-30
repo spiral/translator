@@ -1,18 +1,18 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator\Catalogue;
 
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Exception\LocaleException;
 
-final class StaticLoader implements LoaderInterface
+final class RuntimeLoader implements LoaderInterface
 {
     /**
      * @var CatalogueInterface[]

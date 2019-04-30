@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator;
 
@@ -19,14 +19,13 @@ interface TranslatorInterface extends \Symfony\Contracts\Translation\TranslatorI
     /**
      * Default set of braces to be used in classes or views for indication of translatable content.
      */
-    const I18N_PREFIX  = '[[';
-    const I18N_POSTFIX = ']]';
+    public const I18N_PREFIX  = '[[';
+    public const I18N_POSTFIX = ']]';
 
     /**
      * Resolve domain name for given bundle.
      *
      * @param string $bundle
-     *
      * @return string
      */
     public function resolveDomain(string $bundle): string;
@@ -34,7 +33,7 @@ interface TranslatorInterface extends \Symfony\Contracts\Translation\TranslatorI
     /**
      * Get associated catalogue manager.
      *
-     * @return CataloguesInterface
+     * @return CatalogueManagerInterface
      */
-    public function getCatalogues(): CataloguesInterface;
+    public function getCatalogueManager(): CatalogueManagerInterface;
 }

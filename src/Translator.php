@@ -1,11 +1,11 @@
 <?php
-declare(strict_types=1);
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+declare(strict_types=1);
 
 namespace Spiral\Translator;
 
@@ -19,7 +19,7 @@ use Symfony\Component\Translation\IdentityTranslator;
  * Implementation of Symfony\TranslatorInterface with memory caching, automatic message
  * registration and bundle/domain grouping.
  */
-class Translator implements TranslatorInterface, SingletonInterface
+final class Translator implements TranslatorInterface, SingletonInterface
 {
     /** @var TranslatorConfig */
     private $config;
@@ -31,24 +31,24 @@ class Translator implements TranslatorInterface, SingletonInterface
      * @invisible
      * @var IdentityTranslator
      */
-    private $selector;
+    private $identityTranslator;
 
-    /** @var CataloguesInterface */
-    private $catalogues;
+    /** @var CatalogueManagerInterface */
+    private $catalogueManager;
 
     /**
-     * @param TranslatorConfig    $config
-     * @param IdentityTranslator  $selector
-     * @param CataloguesInterface $locales
+     * @param TranslatorConfig          $config
+     * @param CatalogueManagerInterface $catalogueManager
+     * @param IdentityTranslator        $identityTranslator
      */
     public function __construct(
         TranslatorConfig $config,
-        IdentityTranslator $selector,
-        CataloguesInterface $locales
+        CatalogueManagerInterface $catalogueManager,
+        IdentityTranslator $identityTranslator = null
     ) {
         $this->config = $config;
-        $this->selector = $selector;
-        $this->catalogues = $locales;
+        $this->identityTranslator = $identityTranslator ?? new IdentityTranslator();
+        $this->catalogueManager = $catalogueManager;
 
         $this->setLocale($this->config->defaultLocale());
     }
@@ -63,19 +63,18 @@ class Translator implements TranslatorInterface, SingletonInterface
 
     /**
      * @inheritdoc
-     *
      * @return $this
      *
      * @throws LocaleException
      */
     public function setLocale($locale)
     {
-        if (!$this->catalogues->has($locale)) {
+        if (!$this->catalogueManager->has($locale)) {
             throw new LocaleException($locale);
         }
 
         $this->locale = $locale;
-        $this->catalogues->load($locale);
+        $this->catalogueManager->load($locale);
 
         return $this;
     }
@@ -91,9 +90,9 @@ class Translator implements TranslatorInterface, SingletonInterface
     /**
      * @inheritdoc
      */
-    public function getCatalogues(): CataloguesInterface
+    public function getCatalogueManager(): CatalogueManagerInterface
     {
-        return $this->catalogues;
+        return $this->catalogueManager;
     }
 
     /**
@@ -135,7 +134,7 @@ class Translator implements TranslatorInterface, SingletonInterface
         try {
             $message = $this->get($locale, $domain, $id);
 
-            $pluralized = $this->selector->trans(
+            $pluralized = $this->identityTranslator->trans(
                 $message,
                 ['%count%' => $number],
                 null,
@@ -159,25 +158,24 @@ class Translator implements TranslatorInterface, SingletonInterface
      * @param string $locale
      * @param string $domain
      * @param string $string
-     *
      * @return string
      */
     protected function get(string &$locale, string $domain, string $string): string
     {
-        if ($this->catalogues->get($locale)->has($domain, $string)) {
-            return $this->catalogues->get($locale)->get($domain, $string);
+        if ($this->catalogueManager->get($locale)->has($domain, $string)) {
+            return $this->catalogueManager->get($locale)->get($domain, $string);
         }
 
         $locale = $this->config->fallbackLocale();
 
-        if ($this->catalogues->get($locale)->has($domain, $string)) {
-            return $this->catalogues->get($locale)->get($domain, $string);
+        if ($this->catalogueManager->get($locale)->has($domain, $string)) {
+            return $this->catalogueManager->get($locale)->get($domain, $string);
         }
 
         // we can automatically register message
         if ($this->config->registerMessages()) {
-            $this->catalogues->get($locale)->set($domain, $string, $string);
-            $this->catalogues->save($locale);
+            $this->catalogueManager->get($locale)->set($domain, $string, $string);
+            $this->catalogueManager->save($locale);
         }
 
         //Unable to find translation
@@ -194,7 +192,6 @@ class Translator implements TranslatorInterface, SingletonInterface
      * @param array  $values  Arguments (key => value). Will skip unknown names.
      * @param string $prefix  Placeholder prefix, "{" by default.
      * @param string $postfix Placeholder postfix, "}" by default.
-     *
      * @return string
      */
     public static function interpolate(
