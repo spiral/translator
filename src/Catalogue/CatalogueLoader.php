@@ -38,7 +38,7 @@ final class CatalogueLoader implements LoaderInterface
     {
         $locale = preg_replace("/[^a-zA-Z_]/", '', mb_strtolower($locale));
 
-        return is_dir($this->config->localeDirectory($locale));
+        return is_dir($this->config->getLocaleDirectory($locale));
     }
 
     /**
@@ -47,7 +47,7 @@ final class CatalogueLoader implements LoaderInterface
     public function getLocales(): array
     {
         $finder = new Finder();
-        $finder->in($this->config->localesDirectory())->directories();
+        $finder->in($this->config->getLocalesDirectory())->directories();
 
         $locales = [];
 
@@ -70,7 +70,7 @@ final class CatalogueLoader implements LoaderInterface
         $catalogue = new Catalogue($locale);
 
         $finder = new Finder();
-        $finder->in($this->config->localeDirectory($locale));
+        $finder->in($this->config->getLocaleDirectory($locale));
 
         /**
          * @var SplFileInfo $file

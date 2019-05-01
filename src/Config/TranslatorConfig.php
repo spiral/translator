@@ -49,7 +49,7 @@ final class TranslatorConfig extends InjectableConfig
      *
      * @return string
      */
-    public function defaultDomain(): string
+    public function getDefaultDomain(): string
     {
         return 'messages';
     }
@@ -57,7 +57,7 @@ final class TranslatorConfig extends InjectableConfig
     /**
      * @return string
      */
-    public function defaultLocale(): string
+    public function getDefaultLocale(): string
     {
         return $this->config['locale'];
     }
@@ -65,7 +65,7 @@ final class TranslatorConfig extends InjectableConfig
     /**
      * @return string
      */
-    public function fallbackLocale(): string
+    public function getFallbackLocale(): string
     {
         return $this->config['fallbackLocale'] ?? $this->config['locale'];
     }
@@ -73,20 +73,7 @@ final class TranslatorConfig extends InjectableConfig
     /**
      * @return bool
      */
-    public function cacheLocales(): bool
-    {
-        if (array_key_exists('cacheLocales', $this->config)) {
-            return $this->config['cacheLocales'];
-        }
-
-        //Legacy configs
-        return empty($this->config['autoReload']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function registerMessages(): bool
+    public function isAutoRegisterMessages(): bool
     {
         return !empty($this->config['autoRegister']) || !empty($this->config['registerMessages']);
     }
@@ -94,7 +81,7 @@ final class TranslatorConfig extends InjectableConfig
     /**
      * @return string
      */
-    public function localesDirectory(): string
+    public function getLocalesDirectory(): string
     {
         return $this->config['localesDirectory'] ?? $this->config['directory'];
     }
@@ -103,9 +90,9 @@ final class TranslatorConfig extends InjectableConfig
      * @param string $locale
      * @return string
      */
-    public function localeDirectory(string $locale): string
+    public function getLocaleDirectory(string $locale): string
     {
-        return $this->localesDirectory() . $locale . '/';
+        return $this->getLocalesDirectory() . $locale . '/';
     }
 
     /**

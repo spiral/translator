@@ -174,7 +174,7 @@ final class Indexer
     private function invocationDomain(ReflectionInvocation $invocation): string
     {
         //Translation using default bundle
-        $domain = $this->config->defaultDomain();
+        $domain = $this->config->getDefaultDomain();
 
         if ($invocation->getName() === 'say') {
             //Let's try to confirm domain

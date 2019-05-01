@@ -50,7 +50,7 @@ final class Translator implements TranslatorInterface, SingletonInterface
         $this->identityTranslator = $identityTranslator ?? new IdentityTranslator();
         $this->catalogueManager = $catalogueManager;
 
-        $this->setLocale($this->config->defaultLocale());
+        $this->setLocale($this->config->getDefaultLocale());
     }
 
     /**
@@ -104,7 +104,7 @@ final class Translator implements TranslatorInterface, SingletonInterface
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
-        $domain = $domain ?? $this->config->defaultDomain();
+        $domain = $domain ?? $this->config->getDefaultDomain();
         $locale = $locale ?? $this->locale;
 
         $message = $this->get($locale, $domain, $id);
@@ -128,7 +128,7 @@ final class Translator implements TranslatorInterface, SingletonInterface
         $domain = null,
         $locale = null
     ) {
-        $domain = $domain ?? $this->config->defaultDomain();
+        $domain = $domain ?? $this->config->getDefaultDomain();
         $locale = $locale ?? $this->locale;
 
         try {
@@ -166,14 +166,14 @@ final class Translator implements TranslatorInterface, SingletonInterface
             return $this->catalogueManager->get($locale)->get($domain, $string);
         }
 
-        $locale = $this->config->fallbackLocale();
+        $locale = $this->config->getFallbackLocale();
 
         if ($this->catalogueManager->get($locale)->has($domain, $string)) {
             return $this->catalogueManager->get($locale)->get($domain, $string);
         }
 
         // we can automatically register message
-        if ($this->config->registerMessages()) {
+        if ($this->config->isAutoRegisterMessages()) {
             $this->catalogueManager->get($locale)->set($domain, $string, $string);
             $this->catalogueManager->save($locale);
         }
