@@ -55,7 +55,7 @@ final class CatalogueManager implements CatalogueManagerInterface
 
 
         $this->locales = (array)$this->cache->getLocales();
-        if ($this->locales === []) {
+        if ($this->locales !== []) {
             $this->locales = $this->loader->getLocales();
             $this->cache->setLocales($this->locales);
         }
