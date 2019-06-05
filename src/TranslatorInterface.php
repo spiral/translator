@@ -23,6 +23,13 @@ interface TranslatorInterface extends \Symfony\Contracts\Translation\TranslatorI
     public const I18N_POSTFIX = ']]';
 
     /**
+     * Currently active locale.
+     *
+     * @return string
+     */
+    public function getLocale(): string;
+
+    /**
      * Resolve domain name for given bundle.
      *
      * @param string $bundle

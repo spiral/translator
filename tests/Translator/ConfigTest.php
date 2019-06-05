@@ -23,7 +23,7 @@ class ConfigTest extends TestCase
             'locale' => 'ru'
         ]);
 
-        $this->assertSame('ru', $config->defaultLocale());
+        $this->assertSame('ru', $config->getDefaultLocale());
     }
 
     public function testDefaultDomain()
@@ -32,7 +32,7 @@ class ConfigTest extends TestCase
             'locale' => 'ru'
         ]);
 
-        $this->assertSame('messages', $config->defaultDomain());
+        $this->assertSame('messages', $config->getDefaultDomain());
     }
 
     public function testFallbackLocale()
@@ -41,33 +41,20 @@ class ConfigTest extends TestCase
             'fallbackLocale' => 'ru'
         ]);
 
-        $this->assertSame('ru', $config->fallbackLocale());
-    }
-
-    public function testCacheLocales()
-    {
-        $config = new TranslatorConfig(['cacheLocales' => true]);
-        $this->assertTrue($config->cacheLocales());
-
-        $config = new TranslatorConfig(['cacheLocales' => false]);
-        $this->assertFalse($config->cacheLocales());
-
-        //Legacy
-        $config = new TranslatorConfig(['autoReload' => true]);
-        $this->assertFalse($config->cacheLocales());
+        $this->assertSame('ru', $config->getFallbackLocale());
     }
 
     public function testRegisterMessages()
     {
         $config = new TranslatorConfig(['autoRegister' => true]);
-        $this->assertTrue($config->registerMessages());
+        $this->assertTrue($config->isAutoRegisterMessages());
 
         $config = new TranslatorConfig(['autoRegister' => false]);
-        $this->assertFalse($config->registerMessages());
+        $this->assertFalse($config->isAutoRegisterMessages());
 
         //Legacy
         $config = new TranslatorConfig(['registerMessages' => true]);
-        $this->assertTrue($config->registerMessages());
+        $this->assertTrue($config->isAutoRegisterMessages());
     }
 
     public function testLocalesDirectory()
@@ -76,7 +63,7 @@ class ConfigTest extends TestCase
             'localesDirectory' => 'directory/'
         ]);
 
-        $this->assertSame('directory/', $config->localesDirectory());
+        $this->assertSame('directory/', $config->getLocalesDirectory());
     }
 
     public function testLocaleDirectory()
@@ -85,7 +72,7 @@ class ConfigTest extends TestCase
             'localesDirectory' => 'directory/'
         ]);
 
-        $this->assertSame('directory/ru/', $config->localeDirectory('ru'));
+        $this->assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
     }
 
     public function testLocaleDirectoryShort()
@@ -94,7 +81,7 @@ class ConfigTest extends TestCase
             'directory' => 'directory/'
         ]);
 
-        $this->assertSame('directory/ru/', $config->localeDirectory('ru'));
+        $this->assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
     }
 
     public function testDomains()
