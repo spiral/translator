@@ -50,7 +50,7 @@ final class Translator implements TranslatorInterface, SingletonInterface
         $this->identityTranslator = $identityTranslator ?? new IdentityTranslator();
         $this->catalogueManager = $catalogueManager;
 
-        $this->locale = $this->config->defaultLocale();
+        $this->locale = $this->config->getDefaultLocale();
         $this->catalogueManager->load($this->locale);
     }
 
