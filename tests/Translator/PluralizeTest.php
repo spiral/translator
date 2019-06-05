@@ -71,7 +71,7 @@ class PluralizeTest extends TestCase
     public function testRussian()
     {
         $tr = $this->translator();
-        $tr->setLocale('ru');
+        $tr = $tr->withLocale('ru');
 
         $this->assertSame(
             '1 собака',
@@ -92,7 +92,7 @@ class PluralizeTest extends TestCase
     public function testRussianFallback()
     {
         $tr = $this->translator();
-        $tr->setLocale('ru');
+        $tr = $tr->withLocale('ru');
 
         $this->assertSame(
             '1 собака',

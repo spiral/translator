@@ -50,13 +50,14 @@ final class Translator implements TranslatorInterface, SingletonInterface
         $this->identityTranslator = $identityTranslator ?? new IdentityTranslator();
         $this->catalogueManager = $catalogueManager;
 
-        $this->setLocale($this->config->defaultLocale());
+        $this->locale = $this->config->defaultLocale();
+        $this->catalogueManager->load($this->locale);
     }
 
     /**
      * @inheritdoc
      */
-    public function resolveDomain(string $bundle): string
+    public function getDomain(string $bundle): string
     {
         return $this->config->resolveDomain($bundle);
     }
@@ -67,16 +68,17 @@ final class Translator implements TranslatorInterface, SingletonInterface
      *
      * @throws LocaleException
      */
-    public function setLocale($locale)
+    public function withLocale(string $locale): self
     {
         if (!$this->catalogueManager->has($locale)) {
             throw new LocaleException($locale);
         }
 
-        $this->locale = $locale;
-        $this->catalogueManager->load($locale);
+        $translator = clone $this;
+        $translator->locale = $locale;
+        $translator->catalogueManager->load($locale);
 
-        return $this;
+        return $translator;
     }
 
     /**

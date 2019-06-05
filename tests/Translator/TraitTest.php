@@ -67,7 +67,10 @@ class TraitTest extends TestCase
             $this->assertSame("message", $this->say("message"));
         });
 
-        $this->container->get(TranslatorInterface::class)->setLocale('ru');
+        $this->container->bind(
+            TranslatorInterface::class,
+            $this->container->get(TranslatorInterface::class)->withLocale('ru')
+        );
 
         ContainerScope::runScope($this->container, function () {
             $this->assertSame("translation", $this->say("message"));
