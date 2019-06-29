@@ -33,9 +33,8 @@ class TranslatorTest extends TestCase
         $translator = $this->translator();
         $this->assertSame('en', $translator->getLocale());
 
-        $translator2 = $translator->withLocale('ru');
-        $this->assertSame('ru', $translator2->getLocale());
-        $this->assertSame('en', $translator->getLocale());
+        $translator->setLocale('ru');
+        $this->assertSame('ru', $translator->getLocale());
     }
 
     /**
@@ -44,7 +43,7 @@ class TranslatorTest extends TestCase
     public function testLocaleException()
     {
         $translator = $this->translator();
-        $translator->withLocale('de');
+        $translator->setLocale('de');
     }
 
     public function testDomains()
@@ -66,10 +65,8 @@ class TranslatorTest extends TestCase
         $translator = $this->translator();
         $this->assertSame('message', $translator->trans('message'));
 
-        $translator2 = $translator->withLocale('ru');
-        $this->assertSame('translation', $translator2->trans('message'));
-
-        $this->assertSame('message', $translator->trans('message'));
+        $translator->setLocale('ru');
+        $this->assertSame('translation', $translator->trans('message'));
     }
 
     protected function translator(): Translator
