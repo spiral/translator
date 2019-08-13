@@ -27,10 +27,7 @@ final class Translator implements TranslatorInterface, SingletonInterface
     /** @var string */
     private $locale = '';
 
-    /**
-     * @invisible
-     * @var IdentityTranslator
-     */
+    /** @var IdentityTranslator @internal */
     private $identityTranslator;
 
     /** @var CatalogueManagerInterface */
@@ -187,8 +184,8 @@ final class Translator implements TranslatorInterface, SingletonInterface
      * Output: Hello Member! Good Day!
      *
      * @param string $string
-     * @param array  $values Arguments (key => value). Will skip unknown names.
-     * @param string $prefix Placeholder prefix, "{" by default.
+     * @param array  $values  Arguments (key => value). Will skip unknown names.
+     * @param string $prefix  Placeholder prefix, "{" by default.
      * @param string $postfix Placeholder postfix, "}" by default.
      * @return string
      */
