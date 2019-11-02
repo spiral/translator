@@ -1,12 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
-declare(strict_types=1);
 
+declare(strict_types=1);
 
 namespace Spiral\Translator;
 
@@ -78,7 +79,7 @@ final class Catalogue implements CatalogueInterface
     /**
      * @inheritdoc
      */
-    public function set(string $domain, string $string, string $value)
+    public function set(string $domain, string $string, string $value): void
     {
         $this->data[$domain][$string] = $value;
     }
@@ -96,7 +97,7 @@ final class Catalogue implements CatalogueInterface
      * @param bool             $follow When set to true messages from given catalogue will overwrite
      *                                 existed messages.
      */
-    public function mergeFrom(MessageCatalogue $catalogue, bool $follow = true)
+    public function mergeFrom(MessageCatalogue $catalogue, bool $follow = true): void
     {
         foreach ($catalogue->all() as $domain => $messages) {
             if (!isset($this->data[$domain])) {

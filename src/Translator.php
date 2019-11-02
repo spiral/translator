@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Translator;
@@ -64,7 +66,7 @@ final class Translator implements TranslatorInterface, SingletonInterface
      *
      * @throws LocaleException
      */
-    public function setLocale(string $locale)
+    public function setLocale(string $locale): void
     {
         if (!$this->catalogueManager->has($locale)) {
             throw new LocaleException($locale);
@@ -148,6 +150,54 @@ final class Translator implements TranslatorInterface, SingletonInterface
     }
 
     /**
+     * Interpolate string with given parameters, used by many spiral components.
+     *
+     * Input: Hello {name}! Good {time}! + ['name' => 'Member', 'time' => 'day']
+     * Output: Hello Member! Good Day!
+     *
+     * @param string $string
+     * @param array  $values Arguments (key => value). Will skip unknown names.
+     * @param string $prefix Placeholder prefix, "{" by default.
+     * @param string $postfix Placeholder postfix, "}" by default.
+     * @return string
+     */
+    public static function interpolate(
+        string $string,
+        array $values,
+        string $prefix = '{',
+        string $postfix = '}'
+    ): string {
+        $replaces = [];
+        foreach ($values as $key => $value) {
+            $value = (is_array($value) || $value instanceof \Closure) ? '' : $value;
+
+            if (is_object($value)) {
+                if (method_exists($value, '__toString')) {
+                    $value = $value->__toString();
+                } else {
+                    $value = '';
+                }
+            }
+
+            $replaces[$prefix . $key . $postfix] = $value;
+        }
+
+        return strtr($string, $replaces);
+    }
+
+    /**
+     * Check if string has translation braces [[ and ]].
+     *
+     * @param string $string
+     * @return bool
+     */
+    public static function isMessage(string $string): bool
+    {
+        return substr($string, 0, 2) == self::I18N_PREFIX
+            && substr($string, -2) == self::I18N_POSTFIX;
+    }
+
+    /**
      * Get translation message from the locale bundle or fallback to default locale.
      *
      * @param string $locale
@@ -175,51 +225,5 @@ final class Translator implements TranslatorInterface, SingletonInterface
 
         //Unable to find translation
         return $string;
-    }
-
-    /**
-     * Interpolate string with given parameters, used by many spiral components.
-     *
-     * Input: Hello {name}! Good {time}! + ['name' => 'Member', 'time' => 'day']
-     * Output: Hello Member! Good Day!
-     *
-     * @param string $string
-     * @param array  $values  Arguments (key => value). Will skip unknown names.
-     * @param string $prefix  Placeholder prefix, "{" by default.
-     * @param string $postfix Placeholder postfix, "}" by default.
-     * @return string
-     */
-    public static function interpolate(
-        string $string,
-        array $values,
-        string $prefix = '{',
-        string $postfix = '}'
-    ): string {
-        $replaces = [];
-        foreach ($values as $key => $value) {
-            $value = (is_array($value) || $value instanceof \Closure) ? '' : $value;
-            try {
-                //Object as string
-                $value = is_object($value) ? (string)$value : $value;
-            } catch (\Exception $e) {
-                $value = '';
-            }
-            $replaces[$prefix . $key . $postfix] = $value;
-        }
-
-        return strtr($string, $replaces);
-    }
-
-    /**
-     * Check if string has translation braces [[ and ]].
-     *
-     * @param string $string
-     *
-     * @return bool
-     */
-    public static function isMessage(string $string): bool
-    {
-        return substr($string, 0, 2) == self::I18N_PREFIX
-            && substr($string, -2) == self::I18N_POSTFIX;
     }
 }

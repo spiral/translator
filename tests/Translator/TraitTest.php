@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -35,7 +38,7 @@ class TraitTest extends TestCase
      */
     private $container;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->container = new Container();
 
@@ -56,26 +59,26 @@ class TraitTest extends TestCase
         $this->container->bind(LoaderInterface::class, CatalogueLoader::class);
     }
 
-    public function testScopeException()
+    public function testScopeException(): void
     {
-        $this->assertSame("message", $this->say("message"));
+        $this->assertSame('message', $this->say('message'));
     }
 
-    public function testTranslate()
+    public function testTranslate(): void
     {
-        ContainerScope::runScope($this->container, function () {
-            $this->assertSame("message", $this->say("message"));
+        ContainerScope::runScope($this->container, function (): void {
+            $this->assertSame('message', $this->say('message'));
         });
 
 
         $this->container->get(TranslatorInterface::class)->setLocale('ru');
 
-        ContainerScope::runScope($this->container, function () {
-            $this->assertSame("translation", $this->say("message"));
+        ContainerScope::runScope($this->container, function (): void {
+            $this->assertSame('translation', $this->say('message'));
         });
 
-        ContainerScope::runScope($this->container, function () {
-            $this->assertSame("translation", $this->say("[[message]]"));
+        ContainerScope::runScope($this->container, function (): void {
+            $this->assertSame('translation', $this->say('[[message]]'));
         });
     }
 }

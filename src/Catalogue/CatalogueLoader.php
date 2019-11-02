@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Translator\Catalogue;
@@ -36,7 +38,7 @@ final class CatalogueLoader implements LoaderInterface
      */
     public function hasLocale(string $locale): bool
     {
-        $locale = preg_replace("/[^a-zA-Z_]/", '', mb_strtolower($locale));
+        $locale = preg_replace('/[^a-zA-Z_]/', '', mb_strtolower($locale));
 
         return is_dir($this->config->getLocaleDirectory($locale));
     }
@@ -66,7 +68,7 @@ final class CatalogueLoader implements LoaderInterface
      */
     public function loadCatalogue(string $locale): CatalogueInterface
     {
-        $locale = preg_replace("/[^a-zA-Z_]/", '', mb_strtolower($locale));
+        $locale = preg_replace('/[^a-zA-Z_]/', '', mb_strtolower($locale));
         $catalogue = new Catalogue($locale);
 
         $finder = new Finder();

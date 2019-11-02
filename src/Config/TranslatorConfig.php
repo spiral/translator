@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Translator\Config;
@@ -19,10 +21,7 @@ final class TranslatorConfig extends InjectableConfig
     /**
      * Configuration section.
      */
-    const CONFIG = 'translator';
-
-    /** @var Matcher */
-    private $matcher = null;
+    public const CONFIG = 'translator';
 
     /**
      * @var array
@@ -37,6 +36,9 @@ final class TranslatorConfig extends InjectableConfig
         'loaders'        => [],
         'dumpers'        => []
     ];
+
+    /** @var Matcher */
+    private $matcher = null;
 
     public function __construct(array $config = [])
     {
@@ -134,7 +136,7 @@ final class TranslatorConfig extends InjectableConfig
     {
         $class = $this->config['loaders'][$extension];
 
-        return new $class;
+        return new $class();
     }
 
     /**
@@ -154,6 +156,6 @@ final class TranslatorConfig extends InjectableConfig
     {
         $class = $this->config['dumpers'][$dumper];
 
-        return new $class;
+        return new $class();
     }
 }

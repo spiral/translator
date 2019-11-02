@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * Spiral Framework.
@@ -7,6 +6,8 @@ declare(strict_types=1);
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 use Spiral\Core\ContainerScope;
 use Spiral\Core\Exception\ScopeException;

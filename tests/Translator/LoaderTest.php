@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -18,7 +21,7 @@ use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class LoaderTest extends TestCase
 {
-    public function testHasLocale()
+    public function testHasLocale(): void
     {
         $loader = new CatalogueLoader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/'
@@ -28,7 +31,7 @@ class LoaderTest extends TestCase
         $this->assertTrue($loader->hasLocale('RU'));
     }
 
-    public function testGetLocales()
+    public function testGetLocales(): void
     {
         $loader = new CatalogueLoader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/'
@@ -42,7 +45,7 @@ class LoaderTest extends TestCase
         $this->assertSame($shouldBe, $compared);
     }
 
-    public function testLoadCatalogue()
+    public function testLoadCatalogue(): void
     {
         $loader = new CatalogueLoader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/',
@@ -82,7 +85,7 @@ class LoaderTest extends TestCase
         );
     }
 
-    public function testLoadCatalogueNoLoader()
+    public function testLoadCatalogueNoLoader(): void
     {
         $loader = new CatalogueLoader(new TranslatorConfig([
             'directory' => __DIR__ . '/fixtures/locales/',
@@ -104,7 +107,7 @@ class LoaderTest extends TestCase
         $this->assertFalse(in_array('views', $catalogue->getDomains()));
     }
 
-    public function testStaticLoader()
+    public function testStaticLoader(): void
     {
         $loader = new RuntimeLoader();
         $this->assertFalse($loader->hasLocale('en'));
@@ -113,7 +116,7 @@ class LoaderTest extends TestCase
     /**
      * @expectedException \Spiral\Translator\Exception\LocaleException
      */
-    public function testStaticLoaderException()
+    public function testStaticLoaderException(): void
     {
         $loader = new RuntimeLoader();
         $loader->loadCatalogue('en');

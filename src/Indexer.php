@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Translator;
@@ -57,7 +59,7 @@ final class Indexer
      * @param string $string
      * @param bool   $resolveDomain
      */
-    public function registerMessage(string $domain, string $string, bool $resolveDomain = true)
+    public function registerMessage(string $domain, string $string, bool $resolveDomain = true): void
     {
         if ($resolveDomain) {
             $domain = $this->config->resolveDomain($domain);
@@ -67,7 +69,7 @@ final class Indexer
         $this->catalogue->set($domain, $string, $string);
 
         $this->getLogger()->debug(
-            sprintf("[%s]: `%s`", $domain, $string),
+            sprintf('[%s]: `%s`', $domain, $string),
             compact('domain', 'string')
         );
     }
@@ -78,7 +80,7 @@ final class Indexer
      *
      * @param ClassesInterface $locator
      */
-    public function indexClasses(ClassesInterface $locator)
+    public function indexClasses(ClassesInterface $locator): void
     {
         foreach ($locator->getClasses(TranslatorTrait::class) as $class) {
             $strings = $this->fetchMessages($class, true);
@@ -94,7 +96,7 @@ final class Indexer
      *
      * @param InvocationsInterface $locator
      */
-    public function indexInvocations(InvocationsInterface $locator)
+    public function indexInvocations(InvocationsInterface $locator): void
     {
         $this->registerInvocations($locator->getInvocations(
             new \ReflectionFunction('l')
@@ -114,7 +116,7 @@ final class Indexer
      *
      * @param ReflectionInvocation[] $invocations
      */
-    private function registerInvocations(array $invocations)
+    private function registerInvocations(array $invocations): void
     {
         foreach ($invocations as $invocation) {
             if ($invocation->getArgument(0)->getType() != ReflectionArgument::STRING) {
@@ -141,13 +143,13 @@ final class Indexer
         $target = $reflection->getDefaultProperties() + $reflection->getConstants();
 
         foreach ($reflection->getProperties() as $property) {
-            if (is_string($property->getDocComment()) && strpos($property->getDocComment(), "@do-not-index")) {
+            if (is_string($property->getDocComment()) && strpos($property->getDocComment(), '@do-not-index')) {
                 unset($target[$property->getName()]);
             }
         }
 
         $strings = [];
-        array_walk_recursive($target, function ($value) use (&$strings) {
+        array_walk_recursive($target, function ($value) use (&$strings): void {
             if (is_string($value) && Translator::isMessage($value)) {
                 $strings[] = $this->prepareMessage($value);
             }

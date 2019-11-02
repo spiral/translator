@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -22,13 +25,13 @@ use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class TranslatorTest extends TestCase
 {
-    public function testIsMessage()
+    public function testIsMessage(): void
     {
         $this->assertTrue(Translator::isMessage('[[hello]]'));
         $this->assertFalse(Translator::isMessage('hello'));
     }
 
-    public function testLocale()
+    public function testLocale(): void
     {
         $translator = $this->translator();
         $this->assertSame('en', $translator->getLocale());
@@ -40,13 +43,13 @@ class TranslatorTest extends TestCase
     /**
      * @expectedException \Spiral\Translator\Exception\LocaleException
      */
-    public function testLocaleException()
+    public function testLocaleException(): void
     {
         $translator = $this->translator();
         $translator->setLocale('de');
     }
 
-    public function testDomains()
+    public function testDomains(): void
     {
         $translator = $this->translator();
 
@@ -54,13 +57,13 @@ class TranslatorTest extends TestCase
         $this->assertSame('messages', $translator->getDomain('vendor-views'));
     }
 
-    public function testCatalogues()
+    public function testCatalogues(): void
     {
         $translator = $this->translator();
         $this->assertCount(2, $translator->getCatalogueManager()->getLocales());
     }
 
-    public function testTrans()
+    public function testTrans(): void
     {
         $translator = $this->translator();
         $this->assertSame('message', $translator->trans('message'));

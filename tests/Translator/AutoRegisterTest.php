@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -22,7 +25,7 @@ use Spiral\Translator\TranslatorInterface;
 
 class AutoRegisterTest extends TestCase
 {
-    public function testRegister()
+    public function testRegister(): void
     {
         $tr = $this->translator();
 
@@ -51,8 +54,8 @@ class AutoRegisterTest extends TestCase
         $loader = new RuntimeLoader();
         $loader->addCatalogue('en', new Catalogue('en', [
             'messages' => [
-                "Welcome, {name}!" => "Welcome, {name}!",
-                "Bye, {1}!"        => "Bye, {1}!"
+                'Welcome, {name}!' => 'Welcome, {name}!',
+                'Bye, {1}!'        => 'Bye, {1}!'
             ]
         ]));
 

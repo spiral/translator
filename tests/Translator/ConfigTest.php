@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -17,7 +20,7 @@ use Symfony\Component\Translation\Loader\PhpFileLoader;
 
 class ConfigTest extends TestCase
 {
-    public function testDefaultLocale()
+    public function testDefaultLocale(): void
     {
         $config = new TranslatorConfig([
             'locale' => 'ru'
@@ -26,7 +29,7 @@ class ConfigTest extends TestCase
         $this->assertSame('ru', $config->getDefaultLocale());
     }
 
-    public function testDefaultDomain()
+    public function testDefaultDomain(): void
     {
         $config = new TranslatorConfig([
             'locale' => 'ru'
@@ -35,7 +38,7 @@ class ConfigTest extends TestCase
         $this->assertSame('messages', $config->getDefaultDomain());
     }
 
-    public function testFallbackLocale()
+    public function testFallbackLocale(): void
     {
         $config = new TranslatorConfig([
             'fallbackLocale' => 'ru'
@@ -44,7 +47,7 @@ class ConfigTest extends TestCase
         $this->assertSame('ru', $config->getFallbackLocale());
     }
 
-    public function testRegisterMessages()
+    public function testRegisterMessages(): void
     {
         $config = new TranslatorConfig(['autoRegister' => true]);
         $this->assertTrue($config->isAutoRegisterMessages());
@@ -57,7 +60,7 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->isAutoRegisterMessages());
     }
 
-    public function testLocalesDirectory()
+    public function testLocalesDirectory(): void
     {
         $config = new TranslatorConfig([
             'localesDirectory' => 'directory/'
@@ -66,7 +69,7 @@ class ConfigTest extends TestCase
         $this->assertSame('directory/', $config->getLocalesDirectory());
     }
 
-    public function testLocaleDirectory()
+    public function testLocaleDirectory(): void
     {
         $config = new TranslatorConfig([
             'localesDirectory' => 'directory/'
@@ -75,7 +78,7 @@ class ConfigTest extends TestCase
         $this->assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
     }
 
-    public function testLocaleDirectoryShort()
+    public function testLocaleDirectoryShort(): void
     {
         $config = new TranslatorConfig([
             'directory' => 'directory/'
@@ -84,7 +87,7 @@ class ConfigTest extends TestCase
         $this->assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
     }
 
-    public function testDomains()
+    public function testDomains(): void
     {
         $config = new TranslatorConfig([
             'domains' => [
@@ -99,7 +102,7 @@ class ConfigTest extends TestCase
         $this->assertSame('messages', $config->resolveDomain('vendor-views'));
     }
 
-    public function testDomainsFallback()
+    public function testDomainsFallback(): void
     {
         $config = new TranslatorConfig([
             'domains' => [
@@ -112,7 +115,7 @@ class ConfigTest extends TestCase
         $this->assertSame('external', $config->resolveDomain('external'));
     }
 
-    public function testHasLoader()
+    public function testHasLoader(): void
     {
         $config = new TranslatorConfig([
             'loaders' => ['php' => PhpFileLoader::class]
@@ -122,7 +125,7 @@ class ConfigTest extends TestCase
         $this->assertFalse($config->hasLoader('txt'));
     }
 
-    public function testGetLoader()
+    public function testGetLoader(): void
     {
         $config = new TranslatorConfig([
             'loaders' => ['php' => PhpFileLoader::class]
@@ -131,7 +134,7 @@ class ConfigTest extends TestCase
         $this->assertInstanceOf(LoaderInterface::class, $config->getLoader('php'));
     }
 
-    public function testHasDumper()
+    public function testHasDumper(): void
     {
         $config = new TranslatorConfig([
             'dumpers' => ['po' => PoFileDumper::class]
@@ -141,7 +144,7 @@ class ConfigTest extends TestCase
         $this->assertFalse($config->hasDumper('xml'));
     }
 
-    public function testGetDumper()
+    public function testGetDumper(): void
     {
         $config = new TranslatorConfig([
             'dumpers' => ['po' => PoFileDumper::class]

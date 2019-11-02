@@ -1,10 +1,13 @@
-<?php declare(strict_types=1);
+<?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Translator\Catalogue;
 
@@ -13,7 +16,7 @@ final class NullCache implements CacheInterface
     /**
      * @inheritdoc
      */
-    public function setLocales(?array $locales)
+    public function setLocales(?array $locales): void
     {
     }
 
@@ -28,7 +31,7 @@ final class NullCache implements CacheInterface
     /**
      * @inheritdoc
      */
-    public function saveLocale(string $locale, ?array $data)
+    public function saveLocale(string $locale, ?array $data): void
     {
     }
 

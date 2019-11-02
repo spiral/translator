@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Translator\Catalogue;
@@ -22,7 +24,7 @@ final class RuntimeLoader implements LoaderInterface
     /**
      * @inheritdoc
      */
-    public function addCatalogue(string $locale, CatalogueInterface $catalogue)
+    public function addCatalogue(string $locale, CatalogueInterface $catalogue): void
     {
         $this->catalogues[$locale] = $catalogue;
     }

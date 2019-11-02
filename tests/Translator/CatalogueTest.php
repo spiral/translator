@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -14,7 +17,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 class CatalogueTest extends TestCase
 {
-    public function testGetLocale()
+    public function testGetLocale(): void
     {
         $catalogue = new Catalogue('ru', []);
 
@@ -22,7 +25,7 @@ class CatalogueTest extends TestCase
         $this->assertSame([], $catalogue->getData());
     }
 
-    public function testHas()
+    public function testHas(): void
     {
         $catalogue = new Catalogue('ru', [
             'messages' => [
@@ -45,13 +48,13 @@ class CatalogueTest extends TestCase
      * @expectedException \Spiral\Translator\Exception\CatalogueException
      * @expectedExceptionMessage Undefined string in domain 'domain'
      */
-    public function testUndefinedString()
+    public function testUndefinedString(): void
     {
         $catalogue = new Catalogue('ru', []);
         $catalogue->get('domain', 'message');
     }
 
-    public function testLoadAndGet()
+    public function testLoadAndGet(): void
     {
         $catalogue = new Catalogue('ru', [
             'messages' => [
@@ -66,7 +69,7 @@ class CatalogueTest extends TestCase
         $this->assertSame('Russian View', $catalogue->get('views', 'view'));
     }
 
-    public function testLoadGetAndSet()
+    public function testLoadGetAndSet(): void
     {
         $catalogue = new Catalogue('ru', [
             'messages' => [
@@ -97,7 +100,7 @@ class CatalogueTest extends TestCase
         ], $catalogue->getData());
     }
 
-    public function testMergeSymfonyAndFollow()
+    public function testMergeSymfonyAndFollow(): void
     {
         $catalogue = new Catalogue('ru', []);
 
@@ -110,7 +113,7 @@ class CatalogueTest extends TestCase
         $this->assertSame('Original Translation', $catalogue->get('domain', 'message'));
     }
 
-    public function testMergeSymfonyAndFollowOnEmpty()
+    public function testMergeSymfonyAndFollowOnEmpty(): void
     {
         $catalogue = new Catalogue('ru', []);
 
@@ -120,7 +123,7 @@ class CatalogueTest extends TestCase
         $this->assertSame('Translation', $catalogue->get('domain', 'message'));
     }
 
-    public function testMergeSymfonyAndReplace()
+    public function testMergeSymfonyAndReplace(): void
     {
         $catalogue = new Catalogue('ru', []);
 
@@ -133,7 +136,7 @@ class CatalogueTest extends TestCase
         $this->assertSame('Translation', $catalogue->get('domain', 'message'));
     }
 
-    public function testToCatalogue()
+    public function testToCatalogue(): void
     {
         $catalogue = new Catalogue('ru', [
             'messages' => [
@@ -146,7 +149,7 @@ class CatalogueTest extends TestCase
 
         $sc = $catalogue->toMessageCatalogue();
 
-        $this->assertSame("ru", $sc->getLocale());
+        $this->assertSame('ru', $sc->getLocale());
         $this->assertSame(['messages', 'views'], $sc->getDomains());
     }
 }

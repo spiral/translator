@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -23,27 +26,27 @@ use Spiral\Translator\TranslatorInterface;
 
 class InterpolateTest extends TestCase
 {
-    public function testInterpolate()
+    public function testInterpolate(): void
     {
         $this->assertSame(
-            "Welcome, Antony!",
-            $this->translator()->trans("Welcome, Antony!", ['name' => 'Antony'])
+            'Welcome, Antony!',
+            $this->translator()->trans('Welcome, Antony!', ['name' => 'Antony'])
         );
     }
 
-    public function testInterpolateNumbers()
+    public function testInterpolateNumbers(): void
     {
         $this->assertSame(
-            "Bye, Antony!",
-            $this->translator()->trans("Bye, Antony!", ['Antony'])
+            'Bye, Antony!',
+            $this->translator()->trans('Bye, Antony!', ['Antony'])
         );
     }
 
-    public function testInterpolateBad()
+    public function testInterpolateBad(): void
     {
         $this->assertSame(
-            "Bye, {1}!",
-            $this->translator()->trans("Bye, {1}!", [new self])
+            'Bye, {1}!',
+            $this->translator()->trans('Bye, {1}!', [new self()])
         );
     }
 
@@ -64,8 +67,8 @@ class InterpolateTest extends TestCase
         $loader = new RuntimeLoader();
         $loader->addCatalogue('en', new Catalogue('en', [
             'messages' => [
-                "Welcome, {name}!" => "Welcome, {name}!",
-                "Bye, {1}!"        => "Bye, {1}!"
+                'Welcome, {name}!' => 'Welcome, {name}!',
+                'Bye, {1}!'        => 'Bye, {1}!'
             ]
         ]));
 

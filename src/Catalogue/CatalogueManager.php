@@ -1,10 +1,12 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
 declare(strict_types=1);
 
 namespace Spiral\Translator\Catalogue;
@@ -88,7 +90,7 @@ final class CatalogueManager implements CatalogueManagerInterface
     /**
      * @inheritdoc
      */
-    public function save(string $locale)
+    public function save(string $locale): void
     {
         $this->cache->saveLocale($locale, $this->get($locale)->getData());
     }
@@ -112,7 +114,7 @@ final class CatalogueManager implements CatalogueManagerInterface
     /**
      * Reset all cached data and loaded locates.
      */
-    public function reset()
+    public function reset(): void
     {
         $this->cache->setLocales(null);
         foreach ($this->getLocales() as $locale) {

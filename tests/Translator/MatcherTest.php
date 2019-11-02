@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Translator\Tests;
 
@@ -13,7 +16,7 @@ use Spiral\Translator\Matcher;
 
 class PatternizerTest extends TestCase
 {
-    public function testIsPattern()
+    public function testIsPattern(): void
     {
         $patternizer = new Matcher();
         $this->assertFalse($patternizer->isPattern('abc'));
@@ -28,7 +31,7 @@ class PatternizerTest extends TestCase
      * @param array $pattern
      * @param bool  $result
      */
-    public function testMatch($string, $pattern, $result)
+    public function testMatch($string, $pattern, $result): void
     {
         $matcher = new Matcher();
         $this->assertEquals($result, $matcher->matches($string, $pattern));

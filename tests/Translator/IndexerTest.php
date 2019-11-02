@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -24,12 +27,12 @@ class IndexerTest extends TestCase
 {
     use TranslatorTrait;
 
-    const MESSAGES = [
+    public const MESSAGES = [
         '[[indexer-message]]',
         'not-message'
     ];
 
-    public function testIndexShortFunctions()
+    public function testIndexShortFunctions(): void
     {
         $catalogue = new Catalogue('en');
         $indexer = new Indexer(new TranslatorConfig([
@@ -50,7 +53,7 @@ class IndexerTest extends TestCase
         $this->assertTrue($catalogue->has('spiral', 'hi-from-class'));
     }
 
-    public function testIndexClasses()
+    public function testIndexClasses(): void
     {
         $catalogue = new Catalogue('en');
         $indexer = new Indexer(new TranslatorConfig([
@@ -74,17 +77,6 @@ class IndexerTest extends TestCase
         $this->assertTrue($catalogue->has('spiral', 'new-mess'));
     }
 
-    private function inner()
-    {
-        $var = 'something';
-        l($var);
-
-        l('other', [], 'spiral-domain');
-        l('hello');
-        p('{n} dog|{n} dogs', 1);
-        p('{n} cat|{n} cats', 1, [], 'spiral-domain');
-    }
-
     protected function tContainer(): Container
     {
         $container = new Container();
@@ -97,5 +89,16 @@ class IndexerTest extends TestCase
         ]));
 
         return $container;
+    }
+
+    private function inner(): void
+    {
+        $var = 'something';
+        l($var);
+
+        l('other', [], 'spiral-domain');
+        l('hello');
+        p('{n} dog|{n} dogs', 1);
+        p('{n} cat|{n} cats', 1, [], 'spiral-domain');
     }
 }

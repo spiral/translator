@@ -1,10 +1,13 @@
 <?php
+
 /**
  * Spiral Framework.
  *
  * @license   MIT
  * @author    Anton Titov (Wolfy-J)
  */
+
+declare(strict_types=1);
 
 namespace Spiral\Tests\Translator;
 
@@ -21,7 +24,7 @@ use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class ManagerTest extends TestCase
 {
-    public function testLocalesFromLoader()
+    public function testLocalesFromLoader(): void
     {
         $cache = m::mock(CacheInterface::class);
         $cache->shouldReceive('getLocales')->andReturn(null);
@@ -33,14 +36,13 @@ class ManagerTest extends TestCase
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
-            ]
-        )), $cache);
+            ])), $cache);
 
         $this->assertTrue($manager->has('ru'));
         $this->assertTrue($manager->has('en'));
     }
 
-    public function testLocalesFromMemory()
+    public function testLocalesFromMemory(): void
     {
         $cache = m::mock(CacheInterface::class);
         $cache->shouldReceive('getLocales')->andReturn(['en', 'ru']);
@@ -52,14 +54,13 @@ class ManagerTest extends TestCase
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
-            ]
-        )), $cache);
+            ])), $cache);
 
         $this->assertTrue($manager->has('ru'));
         $this->assertTrue($manager->has('en'));
     }
 
-    public function testCatalogue()
+    public function testCatalogue(): void
     {
         $cache = m::mock(CacheInterface::class);
         $cache->shouldReceive('getLocales')->andReturn(['en', 'ru']);
@@ -70,12 +71,11 @@ class ManagerTest extends TestCase
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
-            ]
-        )), $cache);
+            ])), $cache);
 
         $cache->shouldReceive('loadLocale')->with('ru')->andReturn([]);
 
-        $catalogue = $manager->get("ru");
+        $catalogue = $manager->get('ru');
         $this->assertInstanceOf(CatalogueInterface::class, $catalogue);
 
         $this->assertTrue($catalogue->has('messages', 'message'));
@@ -111,7 +111,7 @@ class ManagerTest extends TestCase
         $manager->save('ru');
     }
 
-    public function testFromMemory()
+    public function testFromMemory(): void
     {
         $cache = m::mock(CacheInterface::class);
         $cache->shouldReceive('getLocales')->andReturn(['en', 'ru']);
@@ -134,12 +134,11 @@ class ManagerTest extends TestCase
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
-            ]
-        )), $cache);
+            ])), $cache);
 
         $cache->shouldReceive('loadLocale')->with('ru')->andReturn([]);
 
-        $catalogue = $manager->get("ru");
+        $catalogue = $manager->get('ru');
         $this->assertInstanceOf(CatalogueInterface::class, $catalogue);
 
         $this->assertTrue($catalogue->has('messages', 'message'));
@@ -155,7 +154,7 @@ class ManagerTest extends TestCase
     /**
      * @expectedException \Spiral\Translator\Exception\LocaleException
      */
-    public function testException()
+    public function testException(): void
     {
         $cache = m::mock(CacheInterface::class);
         $cache->shouldReceive('getLocales')->andReturn(['en']);
@@ -167,8 +166,7 @@ class ManagerTest extends TestCase
                     'php' => PhpFileLoader::class,
                     'po'  => PoFileLoader::class,
                 ]
-            ]
-        )), $cache);
+            ])), $cache);
 
         try {
             $manager->load('ru');
