@@ -48,6 +48,10 @@ final class CatalogueLoader implements LoaderInterface
      */
     public function getLocales(): array
     {
+        if (!is_dir($this->config->getLocalesDirectory())) {
+            return [];
+        }
+
         $finder = new Finder();
         $finder->in($this->config->getLocalesDirectory())->directories();
 
@@ -71,6 +75,10 @@ final class CatalogueLoader implements LoaderInterface
         $locale = preg_replace('/[^a-zA-Z_]/', '', mb_strtolower($locale));
         $catalogue = new Catalogue($locale);
 
+        if (!$this->hasLocale($locale)) {
+            return $catalogue;
+        }
+
         $finder = new Finder();
         $finder->in($this->config->getLocaleDirectory($locale));
 
@@ -79,7 +87,10 @@ final class CatalogueLoader implements LoaderInterface
          */
         foreach ($finder->getIterator() as $file) {
             $this->getLogger()->info(
-                sprintf("found locale domain file '{file}'", $file->getFilename()),
+                sprintf(
+                    "found locale domain file '%s'",
+                    $file->getFilename()
+                ),
                 ['file' => $file->getFilename()]
             );
 
@@ -89,7 +100,7 @@ final class CatalogueLoader implements LoaderInterface
             if (!$this->config->hasLoader($file->getExtension())) {
                 $this->getLogger()->warning(
                     sprintf(
-                        "unable to load domain file '{file}', no loader found",
+                        "unable to load domain file '%s', no loader found",
                         $file->getFilename()
                     ),
                     ['file' => $file->getFilename()]

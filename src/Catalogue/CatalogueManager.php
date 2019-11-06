@@ -14,7 +14,6 @@ namespace Spiral\Translator\Catalogue;
 use Spiral\Translator\Catalogue;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\CatalogueManagerInterface;
-use Spiral\Translator\Exception\LocaleException;
 
 /**
  * Manages catalogues and their cached data.
@@ -71,10 +70,6 @@ final class CatalogueManager implements CatalogueManagerInterface
     {
         if (isset($this->catalogues[$locale])) {
             return $this->catalogues[$locale];
-        }
-
-        if (!$this->has($locale)) {
-            throw new LocaleException($locale);
         }
 
         $data = (array)$this->cache->loadLocale($locale);

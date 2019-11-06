@@ -150,29 +150,4 @@ class ManagerTest extends TestCase
 
         $manager->reset();
     }
-
-    /**
-     * @expectedException \Spiral\Translator\Exception\LocaleException
-     */
-    public function testException(): void
-    {
-        $cache = m::mock(CacheInterface::class);
-        $cache->shouldReceive('getLocales')->andReturn(['en']);
-        $cache->shouldReceive('setLocales')->with()->andReturn(null);
-
-        $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
-                'directory' => __DIR__ . '/fixtures/locales/',
-                'loaders'   => [
-                    'php' => PhpFileLoader::class,
-                    'po'  => PoFileLoader::class,
-                ]
-            ])), $cache);
-
-        try {
-            $manager->load('ru');
-        } catch (LocaleException $e) {
-            $this->assertSame('ru', $e->getLocale());
-            throw $e;
-        }
-    }
 }

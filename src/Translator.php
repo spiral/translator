@@ -223,7 +223,7 @@ final class Translator implements TranslatorInterface, SingletonInterface
             $this->catalogueManager->save($locale);
         }
 
-        //Unable to find translation
+        // Unable to find translation
         return $string;
     }
 }
