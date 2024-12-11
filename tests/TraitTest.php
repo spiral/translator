@@ -27,7 +27,7 @@ class TraitTest extends TestCase
     use TranslatorTrait;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|ContainerInterface
+     * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
      */
     private $container;
 
