@@ -26,7 +26,10 @@ class TraitTest extends TestCase
 {
     use TranslatorTrait;
 
-    private Container $container;
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject|ContainerInterface
+     */
+    private $container;
 
     public function setUp(): void
     {
@@ -51,24 +54,24 @@ class TraitTest extends TestCase
 
     public function testScopeException(): void
     {
-        self::assertSame('message', $this->say('message'));
+        $this->assertSame('message', $this->say('message'));
     }
 
     public function testTranslate(): void
     {
         ContainerScope::runScope($this->container, function (): void {
-            self::assertSame('message', $this->say('message'));
+            $this->assertSame('message', $this->say('message'));
         });
 
 
         $this->container->get(TranslatorInterface::class)->setLocale('ru');
 
         ContainerScope::runScope($this->container, function (): void {
-            self::assertSame('translation', $this->say('message'));
+            $this->assertSame('translation', $this->say('message'));
         });
 
         ContainerScope::runScope($this->container, function (): void {
-            self::assertSame('translation', $this->say('[[message]]'));
+            $this->assertSame('translation', $this->say('[[message]]'));
         });
     }
 }
