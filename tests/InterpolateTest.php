@@ -21,17 +21,26 @@ class InterpolateTest extends TestCase
 {
     public function testInterpolate(): void
     {
-        self::assertSame('Welcome, Antony!', $this->translator()->trans('Welcome, Antony!', ['name' => 'Antony']));
+        $this->assertSame(
+            'Welcome, Antony!',
+            $this->translator()->trans('Welcome, Antony!', ['name' => 'Antony'])
+        );
     }
 
     public function testInterpolateNumbers(): void
     {
-        self::assertSame('Bye, Antony!', $this->translator()->trans('Bye, Antony!', ['Antony']));
+        $this->assertSame(
+            'Bye, Antony!',
+            $this->translator()->trans('Bye, Antony!', ['Antony'])
+        );
     }
 
     public function testInterpolateBad(): void
     {
-        self::assertSame('Bye, {1}!', $this->translator()->trans('Bye, {1}!', [new self('foo')]));
+        $this->assertSame(
+            'Bye, {1}!',
+            $this->translator()->trans('Bye, {1}!', [new self('foo')])
+        );
     }
 
     protected function translator(): Translator
