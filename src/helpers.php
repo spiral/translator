@@ -18,13 +18,13 @@ if (!\function_exists('l')) {
      * @throws TranslatorException
      * @throws ScopeException
      */
-    function l(string $string, array $options = [], string $domain = null): string
+    function l(string $string, array $options = [], ?string $domain = null): string
     {
         /** @psalm-suppress InternalMethod */
         $container = ContainerScope::getContainer();
         if ($container === null || !$container->has(TranslatorInterface::class)) {
             throw new ScopeException(
-                '`TranslatorInterface` binding is missing or container scope is not set'
+                '`TranslatorInterface` binding is missing or container scope is not set',
             );
         }
 
@@ -47,13 +47,13 @@ if (!\function_exists('p')) {
      * @throws TranslatorException
      * @throws ScopeException
      */
-    function p(string $string, int $number, array $options = [], string $domain = null): string
+    function p(string $string, int $number, array $options = [], ?string $domain = null): string
     {
         /** @psalm-suppress InternalMethod */
         $container = ContainerScope::getContainer();
         if (empty($container) || !$container->has(TranslatorInterface::class)) {
             throw new ScopeException(
-                '`TranslatorInterface` binding is missing or container scope is not set'
+                '`TranslatorInterface` binding is missing or container scope is not set',
             );
         }
 

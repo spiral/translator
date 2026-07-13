@@ -14,17 +14,17 @@ use Spiral\Translator\Config\TranslatorConfig;
 use Spiral\Translator\Translator;
 use Spiral\Translator\TranslatorInterface;
 
-class AutoRegisterTest extends TestCase
+final class AutoRegisterTest extends TestCase
 {
     public function testRegister(): void
     {
         $tr = $this->translator();
 
-        $this->assertTrue($tr->getCatalogueManager()->get('en')->has('messages', 'Welcome, {name}!'));
-        $this->assertFalse($tr->getCatalogueManager()->get('en')->has('messages', 'new'));
+        self::assertTrue($tr->getCatalogueManager()->get('en')->has('messages', 'Welcome, {name}!'));
+        self::assertFalse($tr->getCatalogueManager()->get('en')->has('messages', 'new'));
 
         $tr->trans('new');
-        $this->assertTrue($tr->getCatalogueManager()->get('en')->has('messages', 'new'));
+        self::assertTrue($tr->getCatalogueManager()->get('en')->has('messages', 'new'));
     }
 
     protected function translator(): Translator
@@ -34,8 +34,8 @@ class AutoRegisterTest extends TestCase
             'locale'       => 'en',
             'autoRegister' => true,
             'domains'      => [
-                'messages' => ['*']
-            ]
+                'messages' => ['*'],
+            ],
         ]));
 
         $container->bindSingleton(TranslatorInterface::class, Translator::class);
@@ -46,8 +46,8 @@ class AutoRegisterTest extends TestCase
         $loader->addCatalogue('en', new Catalogue('en', [
             'messages' => [
                 'Welcome, {name}!' => 'Welcome, {name}!',
-                'Bye, {1}!'        => 'Bye, {1}!'
-            ]
+                'Bye, {1}!'        => 'Bye, {1}!',
+            ],
         ]));
 
         $container->bind(LoaderInterface::class, $loader);
