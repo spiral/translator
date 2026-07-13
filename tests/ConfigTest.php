@@ -11,103 +11,103 @@ use Symfony\Component\Translation\Dumper\PoFileDumper;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 
-final class ConfigTest extends TestCase
+class ConfigTest extends TestCase
 {
     public function testDefaultLocale(): void
     {
         $config = new TranslatorConfig([
-            'locale' => 'ru',
+            'locale' => 'ru'
         ]);
 
-        self::assertSame('ru', $config->getDefaultLocale());
+        $this->assertSame('ru', $config->getDefaultLocale());
     }
 
     public function testDefaultDomain(): void
     {
         $config = new TranslatorConfig([
-            'locale' => 'ru',
+            'locale' => 'ru'
         ]);
 
-        self::assertSame('messages', $config->getDefaultDomain());
+        $this->assertSame('messages', $config->getDefaultDomain());
     }
 
     public function testFallbackLocale(): void
     {
         $config = new TranslatorConfig([
-            'fallbackLocale' => 'ru',
+            'fallbackLocale' => 'ru'
         ]);
 
-        self::assertSame('ru', $config->getFallbackLocale());
+        $this->assertSame('ru', $config->getFallbackLocale());
     }
 
     public function testRegisterMessages(): void
     {
         $config = new TranslatorConfig(['autoRegister' => true]);
-        self::assertTrue($config->isAutoRegisterMessages());
+        $this->assertTrue($config->isAutoRegisterMessages());
 
         $config = new TranslatorConfig(['autoRegister' => false]);
-        self::assertFalse($config->isAutoRegisterMessages());
+        $this->assertFalse($config->isAutoRegisterMessages());
 
         //Legacy
         $config = new TranslatorConfig(['registerMessages' => true]);
-        self::assertTrue($config->isAutoRegisterMessages());
+        $this->assertTrue($config->isAutoRegisterMessages());
     }
 
     public function testLocalesDirectory(): void
     {
         $config = new TranslatorConfig([
-            'localesDirectory' => 'directory/',
+            'localesDirectory' => 'directory/'
         ]);
 
-        self::assertSame('directory/', $config->getLocalesDirectory());
+        $this->assertSame('directory/', $config->getLocalesDirectory());
     }
 
     public function testLocaleDirectory(): void
     {
         $config = new TranslatorConfig([
-            'localesDirectory' => 'directory/',
+            'localesDirectory' => 'directory/'
         ]);
 
-        self::assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
+        $this->assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
     }
 
     public function testLocaleDirectoryShort(): void
     {
         $config = new TranslatorConfig([
-            'directory' => 'directory/',
+            'directory' => 'directory/'
         ]);
 
-        self::assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
+        $this->assertSame('directory/ru/', $config->getLocaleDirectory('ru'));
     }
 
     public function testLocaleDirectoryWithoutSlash(): void
     {
         $config = new TranslatorConfig([
-            'localesDirectory' => 'directory',
+            'localesDirectory' => 'directory'
         ]);
-        self::assertSame('directory/en/', $config->getLocaleDirectory('en'));
+        $this->assertSame('directory/en/', $config->getLocaleDirectory('en'));
 
         $config = new TranslatorConfig([
-            'directory' => 'directory',
+            'directory' => 'directory'
         ]);
-        self::assertSame('directory/en/', $config->getLocaleDirectory('en'));
+        $this->assertSame('directory/en/', $config->getLocaleDirectory('en'));
     }
 
     public function testLocaleDirectoryWithDirectoryParam(): void
     {
         $config = new TranslatorConfig();
 
-        self::assertSame('directory/en/', $config->getLocaleDirectory('en', 'directory'));
-        self::assertSame('directory/en/', $config->getLocaleDirectory('en', 'directory/'));
+        $this->assertSame('directory/en/', $config->getLocaleDirectory('en', 'directory'));
+        $this->assertSame('directory/en/', $config->getLocaleDirectory('en', 'directory/'));
     }
 
     public function testLocaleDirectoryLeadingSlash(): void
     {
         $config = new TranslatorConfig([
-            'directory' => '/directory/locale',
+            'directory' => '/directory/locale'
         ]);
 
-        self::assertSame('/directory/locale/en/', $config->getLocaleDirectory('en'));
+        $this->assertSame('/directory/locale/en/', $config->getLocaleDirectory('en'));
     }
 
     public function testDomains(): void
@@ -115,14 +115,14 @@ final class ConfigTest extends TestCase
         $config = new TranslatorConfig([
             'domains' => [
                 'spiral'   => [
-                    'spiral-*',
+                    'spiral-*'
                 ],
-                'messages' => ['*'],
-            ],
+                'messages' => ['*']
+            ]
         ]);
 
-        self::assertSame('spiral', $config->resolveDomain('spiral-views'));
-        self::assertSame('messages', $config->resolveDomain('vendor-views'));
+        $this->assertSame('spiral', $config->resolveDomain('spiral-views'));
+        $this->assertSame('messages', $config->resolveDomain('vendor-views'));
     }
 
     public function testDomainsFallback(): void
@@ -130,63 +130,63 @@ final class ConfigTest extends TestCase
         $config = new TranslatorConfig([
             'domains' => [
                 'spiral' => [
-                    'spiral-*',
-                ],
-            ],
+                    'spiral-*'
+                ]
+            ]
         ]);
 
-        self::assertSame('external', $config->resolveDomain('external'));
+        $this->assertSame('external', $config->resolveDomain('external'));
     }
 
     public function testHasLoader(): void
     {
         $config = new TranslatorConfig([
-            'loaders' => ['php' => PhpFileLoader::class],
+            'loaders' => ['php' => PhpFileLoader::class]
         ]);
 
-        self::assertTrue($config->hasLoader('php'));
-        self::assertFalse($config->hasLoader('txt'));
+        $this->assertTrue($config->hasLoader('php'));
+        $this->assertFalse($config->hasLoader('txt'));
     }
 
     public function testGetLoader(): void
     {
         $config = new TranslatorConfig([
-            'loaders' => ['php' => PhpFileLoader::class],
+            'loaders' => ['php' => PhpFileLoader::class]
         ]);
 
-        self::assertInstanceOf(LoaderInterface::class, $config->getLoader('php'));
+        $this->assertInstanceOf(LoaderInterface::class, $config->getLoader('php'));
     }
 
     public function testHasDumper(): void
     {
         $config = new TranslatorConfig([
-            'dumpers' => ['po' => PoFileDumper::class],
+            'dumpers' => ['po' => PoFileDumper::class]
         ]);
 
-        self::assertTrue($config->hasDumper('po'));
-        self::assertFalse($config->hasDumper('xml'));
+        $this->assertTrue($config->hasDumper('po'));
+        $this->assertFalse($config->hasDumper('xml'));
     }
 
     public function testGetDumper(): void
     {
         $config = new TranslatorConfig([
-            'dumpers' => ['po' => PoFileDumper::class],
+            'dumpers' => ['po' => PoFileDumper::class]
         ]);
 
-        self::assertInstanceOf(DumperInterface::class, $config->getDumper('po'));
+        $this->assertInstanceOf(DumperInterface::class, $config->getDumper('po'));
     }
 
     public function testGetDirectories(): void
     {
         $config = new TranslatorConfig();
-        self::assertSame([], $config->getDirectories());
+        $this->assertSame([], $config->getDirectories());
 
         $config = new TranslatorConfig([
             'directories' => [
                 'foo',
-                'bar/',
-            ],
+                'bar/'
+            ]
         ]);
-        self::assertSame(['foo', 'bar/'], $config->getDirectories());
+        $this->assertSame(['foo', 'bar/'], $config->getDirectories());
     }
 }

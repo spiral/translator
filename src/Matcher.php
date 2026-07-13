@@ -13,7 +13,7 @@ final class Matcher
 {
     public function isPattern(string $string): bool
     {
-        return \str_contains($string, '*') || \str_contains($string, '|');
+        return \strpos($string, '*') !== false || \strpos($string, '|') !== false;
     }
 
     /**
@@ -24,7 +24,7 @@ final class Matcher
         return match (true) {
             $string === $pattern => true,
             !$this->isPattern($pattern) => false,
-            default => (bool) \preg_match($this->getRegex($pattern), $string),
+            default => (bool) \preg_match($this->getRegex($pattern), $string)
         };
     }
 

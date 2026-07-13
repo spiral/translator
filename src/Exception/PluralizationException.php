@@ -7,4 +7,6 @@ namespace Spiral\Translator\Exception;
 /**
  * When locale contain invalid pluralization string.
  */
-class PluralizationException extends LocaleException {}
+class PluralizationException extends LocaleException
+{
+}

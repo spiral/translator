@@ -11,10 +11,11 @@ use Spiral\Translator\Catalogue\CatalogueLoader;
 use Spiral\Translator\Catalogue\CatalogueManager;
 use Spiral\Translator\CatalogueInterface;
 use Spiral\Translator\Config\TranslatorConfig;
+use Spiral\Translator\Exception\LocaleException;
 use Symfony\Component\Translation\Loader\PhpFileLoader;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
-final class ManagerTest extends TestCase
+class ManagerTest extends TestCase
 {
     public function testLocalesFromLoader(): void
     {
@@ -23,15 +24,15 @@ final class ManagerTest extends TestCase
         $cache->shouldReceive('setLocales')->andReturn(null);
 
         $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
-            'directory' => __DIR__ . '/fixtures/locales/',
-            'loaders'   => [
-                'php' => PhpFileLoader::class,
-                'po'  => PoFileLoader::class,
-            ],
-        ])), $cache);
+                'directory' => __DIR__ . '/fixtures/locales/',
+                'loaders'   => [
+                    'php' => PhpFileLoader::class,
+                    'po'  => PoFileLoader::class,
+                ]
+            ])), $cache);
 
-        self::assertTrue($manager->has('ru'));
-        self::assertTrue($manager->has('en'));
+        $this->assertTrue($manager->has('ru'));
+        $this->assertTrue($manager->has('en'));
     }
 
     public function testLocalesFromMemory(): void
@@ -41,15 +42,15 @@ final class ManagerTest extends TestCase
         $cache->shouldNotReceive('setLocales')->andReturn(null);
 
         $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
-            'directory' => __DIR__ . '/fixtures/locales/',
-            'loaders'   => [
-                'php' => PhpFileLoader::class,
-                'po'  => PoFileLoader::class,
-            ],
-        ])), $cache);
+                'directory' => __DIR__ . '/fixtures/locales/',
+                'loaders'   => [
+                    'php' => PhpFileLoader::class,
+                    'po'  => PoFileLoader::class,
+                ]
+            ])), $cache);
 
-        self::assertTrue($manager->has('ru'));
-        self::assertTrue($manager->has('en'));
+        $this->assertTrue($manager->has('ru'));
+        $this->assertTrue($manager->has('en'));
     }
 
     public function testCatalogue(): void
@@ -58,33 +59,33 @@ final class ManagerTest extends TestCase
         $cache->shouldReceive('getLocales')->andReturn(['en', 'ru']);
 
         $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
-            'directory' => __DIR__ . '/fixtures/locales/',
-            'loaders'   => [
-                'php' => PhpFileLoader::class,
-                'po'  => PoFileLoader::class,
-            ],
-        ])), $cache);
+                'directory' => __DIR__ . '/fixtures/locales/',
+                'loaders'   => [
+                    'php' => PhpFileLoader::class,
+                    'po'  => PoFileLoader::class,
+                ]
+            ])), $cache);
 
         $cache->shouldReceive('loadLocale')->with('ru')->andReturn([]);
 
         $catalogue = $manager->get('ru');
-        self::assertInstanceOf(CatalogueInterface::class, $catalogue);
+        $this->assertInstanceOf(CatalogueInterface::class, $catalogue);
 
-        self::assertTrue($catalogue->has('messages', 'message'));
-        self::assertSame('translation', $catalogue->get('messages', 'message'));
+        $this->assertTrue($catalogue->has('messages', 'message'));
+        $this->assertSame('translation', $catalogue->get('messages', 'message'));
 
         $cache->shouldReceive('saveLocale')->with(
             'ru',
             [
                 'messages' => [
                     'message' => 'translation',
-                    'should_be_override' => 'changed by application translation',
+                    'should_be_override' => 'changed by application translation'
                 ],
                 'views'    => [
                     'Welcome To Spiral' => 'Добро пожаловать в Spiral Framework',
-                    'Twig Version'      => 'Twig версия',
-                ],
-            ],
+                    'Twig Version'      => 'Twig версия'
+                ]
+            ]
         )->andReturn(null);
 
         $cache->shouldReceive('saveLocale')->with(
@@ -92,13 +93,13 @@ final class ManagerTest extends TestCase
             [
                 'messages' => [
                     'message' => 'new message',
-                    'should_be_override' => 'changed by application translation',
+                    'should_be_override' => 'changed by application translation'
                 ],
                 'views'    => [
                     'Welcome To Spiral' => 'Добро пожаловать в Spiral Framework',
-                    'Twig Version'      => 'Twig версия',
-                ],
-            ],
+                    'Twig Version'      => 'Twig версия'
+                ]
+            ]
         )->andReturn(null);
 
         $catalogue->set('messages', 'message', 'new message');
@@ -111,32 +112,32 @@ final class ManagerTest extends TestCase
         $cache->shouldReceive('getLocales')->andReturn(['en', 'ru']);
 
         $cache->shouldReceive('loadLocale')->with(
-            'ru',
+            'ru'
         )->andReturn([
             'messages' => [
-                'message' => 'new message',
+                'message' => 'new message'
             ],
             'views'    => [
                 'Welcome To Spiral' => 'Добро пожаловать в Spiral Framework',
-                'Twig Version'      => 'Twig версия',
-            ],
+                'Twig Version'      => 'Twig версия'
+            ]
         ]);
 
         $manager = new CatalogueManager(new CatalogueLoader(new TranslatorConfig([
-            'directory' => __DIR__ . '/fixtures/locales/',
-            'loaders'   => [
-                'php' => PhpFileLoader::class,
-                'po'  => PoFileLoader::class,
-            ],
-        ])), $cache);
+                'directory' => __DIR__ . '/fixtures/locales/',
+                'loaders'   => [
+                    'php' => PhpFileLoader::class,
+                    'po'  => PoFileLoader::class,
+                ]
+            ])), $cache);
 
         $cache->shouldReceive('loadLocale')->with('ru')->andReturn([]);
 
         $catalogue = $manager->get('ru');
-        self::assertInstanceOf(CatalogueInterface::class, $catalogue);
+        $this->assertInstanceOf(CatalogueInterface::class, $catalogue);
 
-        self::assertTrue($catalogue->has('messages', 'message'));
-        self::assertSame('new message', $catalogue->get('messages', 'message'));
+        $this->assertTrue($catalogue->has('messages', 'message'));
+        $this->assertSame('new message', $catalogue->get('messages', 'message'));
 
         $cache->shouldReceive('setLocales')->with(null);
         $cache->shouldReceive('saveLocale')->with('ru', null);
