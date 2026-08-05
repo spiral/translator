@@ -6,7 +6,7 @@ namespace Spiral\Tests\Translator\Stubs;
 
 use Spiral\Translator\Traits\TranslatorTrait;
 
-final class NoIndex
+class NoIndex
 {
     use TranslatorTrait;
 
